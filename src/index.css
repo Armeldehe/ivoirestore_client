@@ -1,0 +1,314 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-navy-950 text-white font-sans antialiased;
+  }
+
+  ::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-navy-900;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-orange-500 rounded-full;
+  }
+}
+
+@layer components {
+
+  /* === Boutons === */
+  .btn-primary {
+    @apply inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-semibold rounded-xl transition-all duration-300 shadow-lg shadow-orange-500/25 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2 focus:ring-offset-navy-950 disabled:opacity-50 disabled:cursor-not-allowed active:scale-95;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center gap-2 px-6 py-3 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 text-white font-semibold rounded-xl transition-all duration-300 active:scale-95 hover:shadow-lg hover:shadow-white/5;
+  }
+
+  .btn-navy {
+    @apply inline-flex items-center gap-2 px-6 py-3 bg-navy-500 hover:bg-navy-600 text-white font-semibold rounded-xl transition-all duration-300 shadow-lg shadow-navy-500/25 active:scale-95;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center gap-2 px-4 py-2 text-slate-400 hover:text-white hover:bg-white/5 rounded-lg transition-all duration-200;
+  }
+
+  .btn-outline-orange {
+    @apply inline-flex items-center gap-2 px-6 py-3 border-2 border-orange-500 text-orange-400 hover:bg-orange-500 hover:text-white font-semibold rounded-xl transition-all duration-300 active:scale-95;
+  }
+
+  .btn-danger {
+    @apply inline-flex items-center gap-2 px-4 py-2 bg-red-500/10 hover:bg-red-500/20 border border-red-500/20 hover:border-red-500/40 text-red-400 font-medium rounded-xl transition-all duration-200 text-sm;
+  }
+
+  /* === Cards === */
+  .card {
+    @apply bg-navy-900/80 border border-white/[0.07] rounded-2xl hover:border-orange-500/30 transition-all duration-300;
+  }
+
+  .card-flat {
+    @apply bg-white/[0.03] border border-white/[0.06] rounded-2xl;
+  }
+
+  /* Glass Card — premium glassmorphism */
+  .glass-card {
+    @apply bg-white/[0.04] backdrop-blur-2xl border border-white/[0.1] rounded-2xl;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255,255,255,0.05);
+  }
+
+  .glass-card-hover {
+    @apply glass-card hover:bg-white/[0.07] hover:border-orange-500/30 hover:shadow-xl hover:shadow-orange-500/10 transition-all duration-500;
+  }
+
+  /* Neomorphism Card */
+  .neo-card {
+    @apply rounded-2xl;
+    background: rgba(17, 24, 48, 0.8);
+    box-shadow: 8px 8px 16px rgba(0,0,0,0.4), -4px -4px 12px rgba(255,255,255,0.02);
+  }
+
+  /* === Inputs === */
+  .input-field {
+    @apply w-full px-4 py-3 bg-navy-900/80 border border-white/10 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-orange-500/50 focus:border-orange-500/50 transition-all duration-300 backdrop-blur-sm;
+  }
+
+  .input-field:hover {
+    @apply border-white/20;
+  }
+
+  /* === Badges === */
+  .badge {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold;
+  }
+
+  .badge-orange {
+    @apply badge bg-orange-500/20 text-orange-400;
+  }
+
+  .badge-green {
+    @apply badge bg-green-500/20 text-green-400;
+  }
+
+  .badge-amber {
+    @apply badge bg-amber-500/20 text-amber-400;
+  }
+
+  .badge-red {
+    @apply badge bg-red-500/20 text-red-400;
+  }
+
+  .badge-navy {
+    @apply badge bg-navy-500/30 text-blue-300;
+  }
+
+  .badge-purple {
+    @apply badge bg-purple-500/20 text-purple-400;
+  }
+
+  /* === Typography === */
+  .section-title {
+    @apply text-3xl md:text-4xl font-bold text-white leading-tight;
+  }
+
+  .section-tag {
+    @apply text-orange-400 font-semibold text-sm uppercase tracking-widest;
+  }
+
+  /* === Glass === */
+  .glass {
+    @apply bg-white/[0.04] backdrop-blur-xl border border-white/[0.08];
+  }
+
+  /* === Premium Table === */
+  .table-premium thead tr {
+    @apply border-b border-white/[0.07] bg-white/[0.02];
+  }
+
+  .table-premium th {
+    @apply text-left text-slate-500 text-xs font-semibold uppercase tracking-wider px-4 py-3.5 whitespace-nowrap first:pl-5 last:pr-5;
+  }
+
+  .table-premium tbody tr {
+    @apply border-b border-white/[0.04] hover:bg-white/[0.03] transition-all duration-200 cursor-pointer;
+  }
+
+  .table-premium td {
+    @apply px-4 py-3.5 first:pl-5 last:pr-5;
+  }
+}
+
+/* ═══ Gradient text ═══ */
+.text-gradient-orange {
+  background: linear-gradient(135deg, #F7841D, #ffb056);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-brand {
+  background: linear-gradient(135deg, #F7841D, #34436F);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ═══ Glows ═══ */
+.glow-orange {
+  box-shadow: 0 0 40px rgba(247, 132, 29, 0.3), 0 0 80px rgba(247, 132, 29, 0.1);
+}
+
+.glow-navy {
+  box-shadow: 0 0 30px rgba(52, 67, 111, 0.4);
+}
+
+.glow-sm-orange {
+  box-shadow: 0 0 15px rgba(247, 132, 29, 0.2);
+}
+
+/* ═══ Hero BG ═══ */
+.hero-bg {
+  background:
+    radial-gradient(ellipse 70% 60% at 50% -10%, rgba(247, 132, 29, 0.25), transparent 65%),
+    radial-gradient(ellipse 50% 40% at 80% 50%, rgba(52, 67, 111, 0.3), transparent 60%);
+}
+
+/* ═══ Skeleton shimmer ═══ */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.skeleton {
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.03) 25%, rgba(255, 255, 255, 0.07) 50%, rgba(255, 255, 255, 0.03) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 8px;
+}
+
+/* ═══ Grid pattern ═══ */
+.grid-bg {
+  background-image: linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+/* ═══ Floating animation ═══ */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+}
+
+.animate-float {
+  animation: float 5s ease-in-out infinite;
+}
+
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-8px) rotate(1deg); }
+}
+
+.animate-float-slow {
+  animation: float-slow 7s ease-in-out infinite;
+}
+
+/* ═══ Pulse glow ═══ */
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(247, 132, 29, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(247, 132, 29, 0.4), 0 0 60px rgba(247, 132, 29, 0.1);
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+/* ═══ Gradient animation ═══ */
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.gradient-animate {
+  background: linear-gradient(-45deg, #F7841D, #34436F, #F7841D, #ffb056);
+  background-size: 400% 400%;
+  animation: gradient-shift 8s ease infinite;
+}
+
+/* ═══ Dot decoration ═══ */
+@keyframes dot-pulse {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.1); }
+}
+
+.dot-decoration {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: rgba(247, 132, 29, 0.4);
+  border-radius: 50%;
+  animation: dot-pulse 3s ease-in-out infinite;
+}
+
+/* ═══ Counter animation ═══ */
+@keyframes count-up {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-count-up {
+  animation: count-up 0.5s ease-out forwards;
+}
+
+/* ═══ Slide in ═══ */
+@keyframes slide-in-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-slide-up {
+  animation: slide-in-up 0.4s ease-out forwards;
+}
+
+/* ═══ Scale in ═══ */
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.animate-scale-in {
+  animation: scale-in 0.3s ease-out forwards;
+}
+
+/* ═══ Status dot indicator ═══ */
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 6px;
+}
+
+.status-dot-pending { background: #f59e0b; box-shadow: 0 0 8px rgba(245, 158, 11, 0.4); }
+.status-dot-transmitted { background: #3b82f6; box-shadow: 0 0 8px rgba(59, 130, 246, 0.4); }
+.status-dot-delivered { background: #10b981; box-shadow: 0 0 8px rgba(16, 185, 129, 0.4); }
+.status-dot-commission_paid { background: #a855f7; box-shadow: 0 0 8px rgba(168, 85, 247, 0.4); }
