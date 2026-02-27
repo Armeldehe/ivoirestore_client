@@ -101,7 +101,9 @@ export default function AddProductPage() {
               <HiCollection className="w-6 h-6 text-green-400" />
             </div>
             <div>
-              <h2 className="text-white font-bold text-xl">Nouveau produit</h2>
+              <h2 className="text-[var(--text-primary)] font-bold text-xl">
+                Nouveau produit
+              </h2>
               <p className="text-slate-500 text-sm">
                 Le produit sera associé à une boutique existante
               </p>
@@ -111,7 +113,7 @@ export default function AddProductPage() {
           <form onSubmit={handleSubmit} className="space-y-5">
             {/* Boutique select */}
             <div>
-              <label className="block text-slate-300 text-sm font-medium mb-1.5">
+              <label className="block text-[var(--text-secondary)] text-sm font-medium mb-1.5">
                 Boutique *
               </label>
               <select
@@ -119,11 +121,15 @@ export default function AddProductPage() {
                 onChange={handleChange("boutique")}
                 className={`input-field ${errors.boutique ? "border-red-500/50 focus:ring-red-500/50" : ""}`}
               >
-                <option value="" className="bg-navy-900">
+                <option value="" className="bg-[var(--bg-input)]">
                   Sélectionner une boutique
                 </option>
                 {boutiques.map((b) => (
-                  <option key={b._id} value={b._id} className="bg-navy-900">
+                  <option
+                    key={b._id}
+                    value={b._id}
+                    className="bg-[var(--bg-input)]"
+                  >
                     {b.name}
                   </option>
                 ))}
@@ -135,7 +141,7 @@ export default function AddProductPage() {
 
             {/* Name */}
             <div>
-              <label className="block text-slate-300 text-sm font-medium mb-1.5">
+              <label className="block text-[var(--text-secondary)] text-sm font-medium mb-1.5">
                 Nom du produit *
               </label>
               <input
@@ -202,7 +208,7 @@ export default function AddProductPage() {
             {/* Price + Stock */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-slate-300 text-sm font-medium mb-1.5">
+                <label className="block text-[var(--text-secondary)] text-sm font-medium mb-1.5">
                   Prix (FCFA) *
                 </label>
                 <input
@@ -218,7 +224,7 @@ export default function AddProductPage() {
                 )}
               </div>
               <div>
-                <label className="block text-slate-300 text-sm font-medium mb-1.5">
+                <label className="block text-[var(--text-secondary)] text-sm font-medium mb-1.5">
                   Stock *
                 </label>
                 <input
@@ -237,7 +243,7 @@ export default function AddProductPage() {
 
             {/* Description */}
             <div>
-              <label className="block text-slate-300 text-sm font-medium mb-1.5">
+              <label className="block text-[var(--text-secondary)] text-sm font-medium mb-1.5">
                 Description
               </label>
               <textarea
@@ -250,7 +256,7 @@ export default function AddProductPage() {
             </div>
 
             {/* Submit */}
-            <div className="pt-4 border-t border-white/[0.06]">
+            <div className="pt-4 border-t border-[var(--border-color)]">
               <button
                 type="submit"
                 disabled={loading}

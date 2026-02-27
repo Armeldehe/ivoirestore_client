@@ -27,8 +27,10 @@ function ConfirmModal({ isOpen, onClose, onConfirm, title, message, loading }) {
           className="glass-card p-6 max-w-sm w-full"
           onClick={(e) => e.stopPropagation()}
         >
-          <h3 className="text-white font-bold text-lg mb-2">{title}</h3>
-          <p className="text-slate-400 text-sm mb-6">{message}</p>
+          <h3 className="text-[var(--text-primary)] font-bold text-lg mb-2">
+            {title}
+          </h3>
+          <p className="text-[var(--text-secondary)] text-sm mb-6">{message}</p>
           <div className="flex gap-3 justify-end">
             <button onClick={onClose} className="btn-ghost text-sm">
               Annuler
@@ -107,7 +109,9 @@ export default function AdminProductsPage() {
       <div className="space-y-5">
         {/* Header */}
         <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center justify-between">
-          <h2 className="text-white font-bold text-lg">Produits</h2>
+          <h2 className="text-[var(--text-primary)] font-bold text-lg">
+            Produits
+          </h2>
           <Link
             to="/admin/products/add"
             className="btn-primary text-sm py-2.5 px-4"
@@ -139,11 +143,15 @@ export default function AdminProductsPage() {
             }}
             className="input-field sm:w-56 py-2.5 text-sm"
           >
-            <option value="" className="bg-navy-900">
+            <option value="" className="bg-[var(--bg-input)]">
               Toutes les boutiques
             </option>
             {boutiques.map((b) => (
-              <option key={b._id} value={b._id} className="bg-navy-900">
+              <option
+                key={b._id}
+                value={b._id}
+                className="bg-[var(--bg-input)]"
+              >
                 {b.name}
               </option>
             ))}
@@ -206,12 +214,12 @@ export default function AdminProductsPage() {
                               e.target.src = PLACEHOLDER;
                             }}
                           />
-                          <span className="text-white font-medium line-clamp-1 max-w-[160px]">
+                          <span className="text-[var(--text-primary)] font-medium line-clamp-1 max-w-[160px]">
                             {p.name}
                           </span>
                         </div>
                       </td>
-                      <td className="text-slate-400">
+                      <td className="text-[var(--text-secondary)]">
                         {p.boutique?.name || "—"}
                       </td>
                       <td className="text-orange-400 font-bold whitespace-nowrap">
@@ -242,14 +250,14 @@ export default function AdminProductsPage() {
                           <Link
                             to={`/products/${p._id}`}
                             target="_blank"
-                            className="p-2 bg-white/5 hover:bg-white/10 rounded-lg text-slate-400 hover:text-white transition-all"
+                            className="p-2 bg-[var(--bg-hover)] hover:bg-[var(--bg-card)] rounded-lg text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-all"
                             title="Voir"
                           >
                             <HiExternalLink className="w-3.5 h-3.5" />
                           </Link>
                           <button
                             onClick={() => setDeleteTarget(p)}
-                            className="p-2 bg-white/5 hover:bg-red-500/10 rounded-lg text-slate-400 hover:text-red-400 transition-all"
+                            className="p-2 bg-[var(--bg-hover)] hover:bg-red-500/10 rounded-lg text-[var(--text-secondary)] hover:text-red-400 transition-all"
                             title="Supprimer"
                           >
                             <HiTrash className="w-3.5 h-3.5" />
@@ -263,7 +271,7 @@ export default function AdminProductsPage() {
             </table>
           </div>
           {totalPages > 1 && (
-            <div className="flex items-center justify-between px-5 py-4 border-t border-white/[0.07]">
+            <div className="flex items-center justify-between px-5 py-4 border-t border-[var(--border-color)]">
               <button
                 onClick={() => setPage((p) => Math.max(1, p - 1))}
                 disabled={page === 1}
@@ -271,7 +279,7 @@ export default function AdminProductsPage() {
               >
                 ← Précédent
               </button>
-              <span className="text-slate-400 text-sm">
+              <span className="text-[var(--text-secondary)] text-sm">
                 Page {page} / {totalPages}
               </span>
               <button

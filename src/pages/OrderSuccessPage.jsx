@@ -74,7 +74,7 @@ export default function OrderSuccessPage() {
           </div>
 
           <div className="bg-green-400/5 border border-green-400/20 rounded-xl px-4 py-3 text-sm text-green-400 mb-8">
-            💳 Vous paierez <strong>{product ? formatPrice(product.price * (order.quantity || 1)) : ''}</strong> à la livraison
+            💳 Vous paierez <strong>{product ? formatPrice(product.price * (order.quantity || 1)) : ''}</strong> plus les frais de livraison
           </div>
 
           <div className="flex flex-col sm:flex-row gap-3">

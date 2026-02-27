@@ -40,20 +40,29 @@ export default function AdminLayout({ children }) {
   const Sidebar = ({ mobile = false }) => (
     <div className={`flex flex-col h-full ${mobile ? "p-0" : ""}`}>
       {/* Logo */}
-      <div className="px-6 py-5 border-b border-white/[0.07]">
+      <div
+        className="px-6 py-5"
+        style={{ borderBottom: "1px solid var(--border-color)" }}
+      >
         <img
           src="/logo_ivoirestore.png"
           alt="IvoireStore Admin"
           className="h-8 w-auto"
         />
-        <p className="text-slate-500 text-xs mt-1 font-medium">
+        <p
+          className="text-xs mt-1 font-medium"
+          style={{ color: "var(--text-tertiary)" }}
+        >
           Administration
         </p>
       </div>
 
       {/* Main Nav */}
       <nav className="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
-        <p className="text-slate-600 text-[10px] font-bold uppercase tracking-widest px-4 mb-2">
+        <p
+          className="text-[10px] font-bold uppercase tracking-widest px-4 mb-2"
+          style={{ color: "var(--text-muted)" }}
+        >
           Menu
         </p>
         {NAV_ITEMS.map(({ to, icon: Icon, label }) => {
@@ -68,8 +77,9 @@ export default function AdminLayout({ children }) {
               className={`relative flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-300 group ${
                 active
                   ? "bg-gradient-to-r from-orange-500/15 to-orange-500/5 text-orange-400 border border-orange-500/20"
-                  : "text-slate-400 hover:text-white hover:bg-white/5"
+                  : "hover:bg-[var(--bg-hover)]"
               }`}
+              style={active ? undefined : { color: "var(--text-secondary)" }}
             >
               {active && (
                 <motion.div
@@ -87,8 +97,14 @@ export default function AdminLayout({ children }) {
         })}
 
         {/* Quick Actions */}
-        <div className="pt-4 mt-4 border-t border-white/[0.05]">
-          <p className="text-slate-600 text-[10px] font-bold uppercase tracking-widest px-4 mb-2">
+        <div
+          className="pt-4 mt-4"
+          style={{ borderTop: "1px solid var(--border-color)" }}
+        >
+          <p
+            className="text-[10px] font-bold uppercase tracking-widest px-4 mb-2"
+            style={{ color: "var(--text-muted)" }}
+          >
             Actions rapides
           </p>
           {QUICK_ACTIONS.map(({ to, icon: Icon, label }) => (
@@ -96,9 +112,13 @@ export default function AdminLayout({ children }) {
               key={to}
               to={to}
               onClick={() => setSidebarOpen(false)}
-              className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm text-slate-500 hover:text-orange-400 hover:bg-orange-500/5 transition-all duration-200 group"
+              className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm hover:text-orange-400 hover:bg-orange-500/5 transition-all duration-200 group"
+              style={{ color: "var(--text-tertiary)" }}
             >
-              <div className="w-7 h-7 bg-white/[0.04] group-hover:bg-orange-500/10 rounded-lg flex items-center justify-center transition-colors">
+              <div
+                className="w-7 h-7 group-hover:bg-orange-500/10 rounded-lg flex items-center justify-center transition-colors"
+                style={{ backgroundColor: "var(--bg-hover)" }}
+              >
                 <Icon className="w-3.5 h-3.5" />
               </div>
               {label}
@@ -108,11 +128,15 @@ export default function AdminLayout({ children }) {
       </nav>
 
       {/* Footer */}
-      <div className="px-3 pb-4 space-y-1 border-t border-white/[0.07] pt-3">
+      <div
+        className="px-3 pb-4 space-y-1 pt-3"
+        style={{ borderTop: "1px solid var(--border-color)" }}
+      >
         <Link
           to="/"
           target="_blank"
-          className="flex items-center gap-3 px-4 py-2.5 text-slate-500 hover:text-white rounded-xl hover:bg-white/5 text-sm transition-colors"
+          className="flex items-center gap-3 px-4 py-2.5 rounded-xl hover:bg-[var(--bg-hover)] text-sm transition-colors"
+          style={{ color: "var(--text-tertiary)" }}
         >
           <HiExternalLink className="w-4 h-4" /> Voir le site
         </Link>
@@ -123,10 +147,16 @@ export default function AdminLayout({ children }) {
             </span>
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-white text-xs font-semibold truncate">
+            <p
+              className="text-xs font-semibold truncate"
+              style={{ color: "var(--text-primary)" }}
+            >
               {admin?.username || "Admin"}
             </p>
-            <p className="text-slate-500 text-[10px] truncate">
+            <p
+              className="text-[10px] truncate"
+              style={{ color: "var(--text-tertiary)" }}
+            >
               {admin?.email || ""}
             </p>
           </div>
@@ -142,9 +172,18 @@ export default function AdminLayout({ children }) {
   );
 
   return (
-    <div className="min-h-screen bg-navy-950 flex">
+    <div
+      className="min-h-screen flex"
+      style={{ backgroundColor: "var(--bg-primary)" }}
+    >
       {/* Desktop Sidebar */}
-      <aside className="hidden lg:flex flex-col w-64 bg-navy-900/80 backdrop-blur-xl border-r border-white/[0.07] fixed top-0 bottom-0 left-0 z-40">
+      <aside
+        className="hidden lg:flex flex-col w-64 backdrop-blur-xl fixed top-0 bottom-0 left-0 z-40"
+        style={{
+          backgroundColor: "var(--bg-secondary)",
+          borderRight: "1px solid var(--border-color)",
+        }}
+      >
         <Sidebar />
       </aside>
 
@@ -164,7 +203,11 @@ export default function AdminLayout({ children }) {
               animate={{ x: 0 }}
               exit={{ x: "-100%" }}
               transition={{ type: "spring", damping: 28, stiffness: 280 }}
-              className="fixed top-0 bottom-0 left-0 w-72 bg-navy-900 border-r border-white/[0.07] z-50 lg:hidden"
+              className="fixed top-0 bottom-0 left-0 w-72 z-50 lg:hidden"
+              style={{
+                backgroundColor: "var(--bg-secondary)",
+                borderRight: "1px solid var(--border-color)",
+              }}
             >
               <Sidebar mobile />
             </motion.aside>
@@ -175,7 +218,14 @@ export default function AdminLayout({ children }) {
       {/* Main */}
       <div className="flex-1 lg:ml-64 flex flex-col min-h-screen">
         {/* Top bar */}
-        <header className="sticky top-0 z-30 bg-navy-950/90 backdrop-blur-2xl border-b border-white/[0.07] px-4 py-3 flex items-center gap-4">
+        <header
+          className="sticky top-0 z-30 backdrop-blur-2xl px-4 py-3 flex items-center gap-4"
+          style={{
+            backgroundColor:
+              "color-mix(in srgb, var(--bg-primary) 90%, transparent)",
+            borderBottom: "1px solid var(--border-color)",
+          }}
+        >
           <button
             className="lg:hidden btn-ghost p-2"
             onClick={() => setSidebarOpen(!sidebarOpen)}
@@ -187,14 +237,20 @@ export default function AdminLayout({ children }) {
             )}
           </button>
           <div className="flex-1">
-            <h1 className="text-white font-bold text-base">
+            <h1
+              className="font-bold text-base"
+              style={{ color: "var(--text-primary)" }}
+            >
               {NAV_ITEMS.find(
                 (n) =>
                   location.pathname === n.to ||
                   (n.to !== "/admin" && location.pathname.startsWith(n.to)),
               )?.label || "Admin"}
             </h1>
-            <p className="text-slate-600 text-xs hidden sm:block">
+            <p
+              className="text-xs hidden sm:block"
+              style={{ color: "var(--text-muted)" }}
+            >
               {new Date().toLocaleDateString("fr-FR", {
                 weekday: "long",
                 year: "numeric",

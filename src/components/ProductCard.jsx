@@ -30,7 +30,8 @@ export default function ProductCard({ product, index = 0 }) {
       {/* Image */}
       <Link
         to={`/products/${product._id}`}
-        className="relative block overflow-hidden bg-navy-900/50"
+        className="relative block overflow-hidden"
+        style={{ backgroundColor: "var(--bg-secondary)" }}
       >
         <div className="aspect-square overflow-hidden">
           <img
@@ -45,7 +46,7 @@ export default function ProductCard({ product, index = 0 }) {
         </div>
 
         {/* Gradient overlay on hover */}
-        <div className="absolute inset-0 bg-gradient-to-t from-navy-950/90 via-navy-950/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500" />
 
         {/* Badges top */}
         <div className="absolute top-3 left-3 flex flex-col gap-1.5">
@@ -99,13 +100,22 @@ export default function ProductCard({ product, index = 0 }) {
         )}
 
         <Link to={`/products/${product._id}`}>
-          <h3 className="text-white font-semibold text-sm leading-snug line-clamp-2 hover:text-orange-300 transition-colors duration-200">
+          <h3
+            className="font-semibold text-sm leading-snug line-clamp-2 hover:text-orange-300 transition-colors duration-200"
+            style={{ color: "var(--text-primary)" }}
+          >
             {product.name}
           </h3>
         </Link>
 
-        <div className="flex items-center justify-between mt-auto pt-3 border-t border-white/[0.06]">
-          <span className="text-white font-bold text-base">
+        <div
+          className="flex items-center justify-between mt-auto pt-3"
+          style={{ borderTop: "1px solid var(--border-color)" }}
+        >
+          <span
+            className="font-bold text-base"
+            style={{ color: "var(--text-primary)" }}
+          >
             {formatPrice(product.price)}
           </span>
           <Link

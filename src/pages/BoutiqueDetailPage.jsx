@@ -54,7 +54,10 @@ export default function BoutiqueDetailPage() {
       <MainLayout>
         <div className="min-h-[60vh] flex flex-col items-center justify-center text-center px-4">
           <p className="text-6xl mb-6">🏪</p>
-          <h2 className="text-white text-2xl font-bold mb-2">
+          <h2
+            className="text-2xl font-bold mb-2"
+            style={{ color: "var(--text-primary)" }}
+          >
             Boutique introuvable
           </h2>
           <p className="text-slate-400 mb-8 max-w-md">
@@ -78,7 +81,7 @@ export default function BoutiqueDetailPage() {
           alt=""
           className="w-full h-full object-cover opacity-60 scale-105 blur-sm"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-navy-950 via-navy-950/40 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
 
         <div className="absolute inset-0 flex items-end">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-10 w-full">
@@ -136,7 +139,10 @@ export default function BoutiqueDetailPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Search & Stats */}
         <div className="flex flex-col md:flex-row justify-between items-center gap-6 mb-12">
-          <h2 className="text-2xl font-bold text-white flex items-center gap-3">
+          <h2
+            className="text-2xl font-bold flex items-center gap-3"
+            style={{ color: "var(--text-primary)" }}
+          >
             <HiShoppingBag className="w-6 h-6 text-orange-500" />
             Catalogue de la boutique
           </h2>
@@ -169,9 +175,18 @@ export default function BoutiqueDetailPage() {
             ))}
           </div>
         ) : (
-          <div className="text-center py-20 bg-navy-900/50 rounded-3xl border border-white/[0.05]">
+          <div
+            className="text-center py-20 rounded-3xl"
+            style={{
+              backgroundColor: "var(--bg-secondary)",
+              border: "1px solid var(--border-color)",
+            }}
+          >
             <p className="text-5xl mb-4">📦</p>
-            <h3 className="text-white font-bold text-lg mb-2">
+            <h3
+              className="font-bold text-lg mb-2"
+              style={{ color: "var(--text-primary)" }}
+            >
               Aucun produit trouvé
             </h3>
             <p className="text-slate-500">
@@ -190,7 +205,10 @@ export default function BoutiqueDetailPage() {
             <HiShieldCheck className="w-10 h-10 text-orange-400" />
           </div>
           <div className="flex-1 text-center md:text-left">
-            <h3 className="text-xl font-bold text-white mb-2">
+            <h3
+              className="text-xl font-bold mb-2"
+              style={{ color: "var(--text-primary)" }}
+            >
               Achat sécurisé sur IvoireStore
             </h3>
             <p className="text-slate-400 leading-relaxed">

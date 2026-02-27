@@ -32,16 +32,28 @@ export default function CookieConsent() {
           transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
           className="fixed bottom-0 left-0 right-0 z-[999] p-4"
         >
-          <div className="max-w-3xl mx-auto bg-navy-900/95 backdrop-blur-xl border border-white/[0.1] rounded-2xl p-5 sm:p-6 shadow-2xl shadow-black/40 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+          <div
+            className="max-w-3xl mx-auto backdrop-blur-xl rounded-2xl p-5 sm:p-6 shadow-2xl flex flex-col sm:flex-row items-start sm:items-center gap-4"
+            style={{
+              backgroundColor: "var(--bg-card)",
+              border: "1px solid var(--border-color)",
+            }}
+          >
             <div className="flex items-start gap-3 flex-1">
               <div className="w-10 h-10 bg-orange-500/15 rounded-xl flex items-center justify-center shrink-0 mt-0.5">
                 <HiShieldCheck className="w-5 h-5 text-orange-400" />
               </div>
               <div>
-                <p className="text-white text-sm font-medium mb-1">
+                <p
+                  className="text-sm font-medium mb-1"
+                  style={{ color: "var(--text-primary)" }}
+                >
                   Nous utilisons des cookies
                 </p>
-                <p className="text-slate-400 text-xs leading-relaxed">
+                <p
+                  className="text-xs leading-relaxed"
+                  style={{ color: "var(--text-secondary)" }}
+                >
                   Ce site utilise des cookies essentiels pour le fonctionnement
                   de la plateforme. En continuant, vous acceptez notre{" "}
                   <Link

@@ -98,8 +98,10 @@ function StatCard({
           </span>
         )}
       </div>
-      <p className="text-slate-400 text-xs font-medium mb-1">{label}</p>
-      <p className="text-3xl font-black text-white">
+      <p className="text-[var(--text-secondary)] text-xs font-medium mb-1">
+        {label}
+      </p>
+      <p className="text-3xl font-black text-[var(--text-primary)]">
         {value != null ? <AnimatedNumber value={value} suffix={suffix} /> : "—"}
       </p>
     </motion.div>
@@ -120,8 +122,10 @@ export default function AdminDashboardPage() {
       .catch(() => {})
       .finally(() => setSL(false));
 
-    getOrders({ limit: 8 })
-      .then((d) => setOrders(d.data || []))
+    getOrders({ limit: 20 })
+      .then((d) =>
+        setOrders((d.data || []).filter((o) => o.status !== "commission_paid")),
+      )
       .catch(() => {})
       .finally(() => setOL(false));
   }, []);
@@ -130,9 +134,16 @@ export default function AdminDashboardPage() {
     setUpdating(orderId);
     try {
       await updateOrderStatus(orderId, newStatus);
-      setOrders((prev) =>
-        prev.map((o) => (o._id === orderId ? { ...o, status: newStatus } : o)),
-      );
+      if (newStatus === "commission_paid") {
+        // Remove finalized orders from dashboard
+        setOrders((prev) => prev.filter((o) => o._id !== orderId));
+      } else {
+        setOrders((prev) =>
+          prev.map((o) =>
+            o._id === orderId ? { ...o, status: newStatus } : o,
+          ),
+        );
+      }
       toast.success("Statut mis à jour !");
     } catch (err) {
       toast.error(err.message);
@@ -226,7 +237,7 @@ export default function AdminDashboardPage() {
           )}
         </div>
 
-        {/* Charts + quick info */}
+        {/* Charts + quick in*/}
         {!statsLoading && pieData.length > 0 && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -235,7 +246,7 @@ export default function AdminDashboardPage() {
             className="grid grid-cols-1 lg:grid-cols-3 gap-5"
           >
             <div className="glass-card p-6 lg:col-span-1">
-              <h3 className="text-white font-bold text-sm mb-4">
+              <h3 className="text-[var(--text-primary)] font-bold text-sm mb-4">
                 Répartition commandes
               </h3>
               <div className="h-48">
@@ -284,11 +295,11 @@ export default function AdminDashboardPage() {
             </div>
 
             <div className="glass-card p-6 lg:col-span-2 flex flex-col justify-center">
-              <h3 className="text-white font-bold text-sm mb-4">
+              <h3 className="text-[var(--text-primary)] font-bold text-sm mb-4">
                 Résumé rapide
               </h3>
               <div className="grid grid-cols-2 gap-4">
-                <div className="bg-white/[0.03] rounded-xl p-4 border border-white/[0.05]">
+                <div className="bg-[var(--bg-hover)] rounded-xl p-4 border border-[var(--border-color)]">
                   <p className="text-slate-500 text-xs mb-1">
                     Commandes en attente
                   </p>
@@ -296,7 +307,7 @@ export default function AdminDashboardPage() {
                     {stats?.commandes?.pending || 0}
                   </p>
                 </div>
-                <div className="bg-white/[0.03] rounded-xl p-4 border border-white/[0.05]">
+                <div className="bg-[var(--bg-hover)] rounded-xl p-4 border border-[var(--border-color)]">
                   <p className="text-slate-500 text-xs mb-1">
                     Commandes livrées
                   </p>
@@ -304,7 +315,7 @@ export default function AdminDashboardPage() {
                     {stats?.commandes?.delivered || 0}
                   </p>
                 </div>
-                <div className="bg-white/[0.03] rounded-xl p-4 border border-white/[0.05]">
+                <div className="bg-[var(--bg-hover)] rounded-xl p-4 border border-[var(--border-color)]">
                   <p className="text-slate-500 text-xs mb-1">
                     Produits en rupture
                   </p>
@@ -312,7 +323,7 @@ export default function AdminDashboardPage() {
                     {stats?.produits?.outOfStock || 0}
                   </p>
                 </div>
-                <div className="bg-white/[0.03] rounded-xl p-4 border border-white/[0.05]">
+                <div className="bg-[var(--bg-hover)] rounded-xl p-4 border border-[var(--border-color)]">
                   <p className="text-slate-500 text-xs mb-1">
                     Boutiques vérifiées
                   </p>
@@ -328,7 +339,9 @@ export default function AdminDashboardPage() {
         {/* Recent orders */}
         <div>
           <div className="flex items-center justify-between mb-5">
-            <h2 className="text-white font-bold text-lg">Commandes récentes</h2>
+            <h2 className="text-[var(--text-primary)] font-bold text-lg">
+              Commandes récentes
+            </h2>
             <Link
               to="/admin/orders"
               className="text-xs text-orange-400 hover:text-orange-300 font-semibold transition-colors"
@@ -383,13 +396,13 @@ export default function AdminDashboardPage() {
                         transition={{ delay: i * 0.04 }}
                         onClick={() => setSelectedOrder(order)}
                       >
-                        <td className="text-white font-medium">
+                        <td className="text-[var(--text-primary)] font-medium">
                           {order.customerName}
                         </td>
-                        <td className="text-slate-400">
+                        <td className="text-[var(--text-secondary)]">
                           {order.customerPhone}
                         </td>
-                        <td className="text-slate-300 max-w-[140px] truncate">
+                        <td className="text-[var(--text-secondary)] max-w-[140px] truncate">
                           {order.product?.name || "—"}
                         </td>
                         <td className="text-orange-400 font-semibold whitespace-nowrap">
@@ -416,13 +429,13 @@ export default function AdminDashboardPage() {
                                 onChange={(e) =>
                                   handleStatusChange(order._id, e.target.value)
                                 }
-                                className="bg-transparent border border-white/10 rounded-lg px-2 py-1 text-xs text-white cursor-pointer hover:border-orange-500/50 transition-colors focus:outline-none focus:ring-1 focus:ring-orange-500"
+                                className="bg-transparent border border-[var(--border-color)] rounded-lg px-2 py-1 text-xs text-[var(--text-primary)] cursor-pointer hover:border-orange-500/50 transition-colors focus:outline-none focus:ring-1 focus:ring-orange-500"
                               >
                                 {STATUS_OPTIONS.map((s) => (
                                   <option
                                     key={s.value}
                                     value={s.value}
-                                    className="bg-navy-900"
+                                    className="bg-[var(--bg-input)]"
                                   >
                                     {s.label}
                                   </option>

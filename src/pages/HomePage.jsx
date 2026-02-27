@@ -7,6 +7,7 @@ import HeroSection from "../components/HeroSection";
 import FeaturesSection from "../components/FeaturesSection";
 import ProductCard from "../components/ProductCard";
 import BoutiqueCard from "../components/BoutiqueCard";
+import PlaceholderBoutiqueCard from "../components/PlaceholderBoutiqueCard";
 import HorizontalCarousel from "../components/HorizontalCarousel";
 import ReviewsSection from "../components/ReviewsSection";
 import { useProducts } from "../hooks/useProducts";
@@ -130,7 +131,8 @@ export default function HomePage() {
       {/* ═══════════════════ BOUTIQUES VÉRIFIÉES ═══════════════════ */}
       <section
         id="boutiques"
-        className="py-20 bg-navy-900/30 relative overflow-hidden"
+        className="py-20 relative overflow-hidden"
+        style={{ backgroundColor: "var(--bg-secondary)" }}
       >
         {/* Decorative background orb */}
         <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-navy-500/[0.06] rounded-full blur-3xl pointer-events-none" />
@@ -188,8 +190,10 @@ export default function HomePage() {
               ))}
             </HorizontalCarousel>
           ) : (
-            <div className="py-14 text-center">
-              <p className="text-slate-500">Aucune boutique disponible.</p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+              {[0, 1, 2, 3].map((i) => (
+                <PlaceholderBoutiqueCard key={i} index={i} />
+              ))}
             </div>
           )}
 

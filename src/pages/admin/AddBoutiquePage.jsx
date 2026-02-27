@@ -75,7 +75,7 @@ export default function AddBoutiquePage() {
               <HiOfficeBuilding className="w-6 h-6 text-orange-400" />
             </div>
             <div>
-              <h2 className="text-white font-bold text-xl">
+              <h2 className="text-[var(--text-primary)] font-bold text-xl">
                 Nouvelle boutique
               </h2>
               <p className="text-slate-500 text-sm">
@@ -87,7 +87,7 @@ export default function AddBoutiquePage() {
           <form onSubmit={handleSubmit} className="space-y-5">
             {/* Name */}
             <div>
-              <label className="block text-slate-300 text-sm font-medium mb-1.5">
+              <label className="block text-[var(--text-secondary)] text-sm font-medium mb-1.5">
                 Nom de la boutique *
               </label>
               <input
@@ -116,7 +116,7 @@ export default function AddBoutiquePage() {
             {/* Phone + Address */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-slate-300 text-sm font-medium mb-1.5">
+                <label className="block text-[var(--text-secondary)] text-sm font-medium mb-1.5">
                   Téléphone *
                 </label>
                 <input
@@ -131,7 +131,7 @@ export default function AddBoutiquePage() {
                 )}
               </div>
               <div>
-                <label className="block text-slate-300 text-sm font-medium mb-1.5">
+                <label className="block text-[var(--text-secondary)] text-sm font-medium mb-1.5">
                   Adresse *
                 </label>
                 <input
@@ -149,7 +149,7 @@ export default function AddBoutiquePage() {
 
             {/* Description */}
             <div>
-              <label className="block text-slate-300 text-sm font-medium mb-1.5">
+              <label className="block text-[var(--text-secondary)] text-sm font-medium mb-1.5">
                 Description
               </label>
               <textarea
@@ -163,7 +163,7 @@ export default function AddBoutiquePage() {
 
             {/* Commission */}
             <div>
-              <label className="block text-slate-300 text-sm font-medium mb-1.5">
+              <label className="block text-[var(--text-secondary)] text-sm font-medium mb-1.5">
                 Commission (%)
               </label>
               <input
@@ -182,7 +182,7 @@ export default function AddBoutiquePage() {
             </div>
 
             {/* Submit */}
-            <div className="pt-4 border-t border-white/[0.06]">
+            <div className="pt-4 border-t border-[var(--border-color)]">
               <button
                 type="submit"
                 disabled={loading}

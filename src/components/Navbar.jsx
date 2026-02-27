@@ -2,14 +2,16 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { HiShoppingBag, HiMenu, HiX } from "react-icons/hi";
-import { HiMagnifyingGlass } from "react-icons/hi2";
+import { HiMagnifyingGlass, HiSun, HiMoon } from "react-icons/hi2";
 import { useCart } from "../context/CartContext";
+import { useTheme } from "../context/ThemeContext";
 import CartDrawer from "./CartDrawer";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const { totalItems, setIsOpen } = useCart();
+  const { theme, toggleTheme } = useTheme();
   const location = useLocation();
 
   useEffect(() => {
@@ -32,10 +34,19 @@ export default function Navbar() {
     <>
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          scrolled
-            ? "bg-navy-950/90 backdrop-blur-2xl border-b border-white/[0.06] shadow-2xl shadow-black/30"
-            : "bg-transparent"
+          scrolled ? "backdrop-blur-2xl shadow-2xl" : "bg-transparent"
         }`}
+        style={
+          scrolled
+            ? {
+                backgroundColor:
+                  theme === "dark"
+                    ? "rgba(9,13,30,0.9)"
+                    : "rgba(255,255,255,0.85)",
+                borderBottom: `1px solid ${theme === "dark" ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.06)"}`,
+              }
+            : undefined
+        }
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 md:h-18">
@@ -59,8 +70,11 @@ export default function Navbar() {
                     className={`relative px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 ${
                       isActive
                         ? "text-orange-400 bg-orange-500/10"
-                        : "text-slate-400 hover:text-white hover:bg-white/5"
+                        : "hover:bg-[var(--bg-hover)]"
                     }`}
+                    style={{
+                      color: isActive ? undefined : "var(--text-secondary)",
+                    }}
                   >
                     {link.label}
                     {isActive && (
@@ -80,7 +94,39 @@ export default function Navbar() {
             </nav>
 
             {/* Actions */}
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1.5">
+              {/* Theme toggle */}
+              <button
+                onClick={toggleTheme}
+                className="btn-ghost p-2 hover:text-orange-400 transition-colors"
+                aria-label={theme === "dark" ? "Mode clair" : "Mode sombre"}
+                title={theme === "dark" ? "Mode clair" : "Mode sombre"}
+              >
+                <AnimatePresence mode="wait" initial={false}>
+                  {theme === "dark" ? (
+                    <motion.div
+                      key="sun"
+                      initial={{ rotate: -90, opacity: 0, scale: 0 }}
+                      animate={{ rotate: 0, opacity: 1, scale: 1 }}
+                      exit={{ rotate: 90, opacity: 0, scale: 0 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <HiSun className="w-5 h-5" />
+                    </motion.div>
+                  ) : (
+                    <motion.div
+                      key="moon"
+                      initial={{ rotate: 90, opacity: 0, scale: 0 }}
+                      animate={{ rotate: 0, opacity: 1, scale: 1 }}
+                      exit={{ rotate: -90, opacity: 0, scale: 0 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <HiMoon className="w-5 h-5" />
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </button>
+
               <Link
                 to="/products"
                 className="btn-ghost hidden md:flex p-2 hover:text-orange-400 transition-colors"
@@ -129,7 +175,14 @@ export default function Navbar() {
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.3 }}
-              className="md:hidden border-t border-white/10 bg-navy-950/98 backdrop-blur-2xl overflow-hidden"
+              className="md:hidden overflow-hidden backdrop-blur-2xl"
+              style={{
+                borderTop: `1px solid var(--border-color)`,
+                backgroundColor:
+                  theme === "dark"
+                    ? "rgba(9,13,30,0.98)"
+                    : "rgba(255,255,255,0.98)",
+              }}
             >
               <nav className="px-4 py-4 flex flex-col gap-1">
                 {navLinks.map((link, i) => (
@@ -144,8 +197,14 @@ export default function Navbar() {
                       className={`px-4 py-3 rounded-xl text-sm font-medium transition-all block ${
                         location.pathname === link.to
                           ? "text-orange-400 bg-orange-500/10"
-                          : "text-slate-300 hover:text-white hover:bg-white/5"
+                          : ""
                       }`}
+                      style={{
+                        color:
+                          location.pathname === link.to
+                            ? undefined
+                            : "var(--text-secondary)",
+                      }}
                     >
                       {link.label}
                     </Link>

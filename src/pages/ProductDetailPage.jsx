@@ -48,7 +48,10 @@ export default function ProductDetailPage() {
       <MainLayout>
         <div className="min-h-[65vh] flex flex-col items-center justify-center text-center px-4">
           <p className="text-6xl mb-5">⚠️</p>
-          <p className="text-white text-xl font-bold mb-2">
+          <p
+            className="text-xl font-bold mb-2"
+            style={{ color: "var(--text-primary)" }}
+          >
             Produit introuvable
           </p>
           <p className="text-slate-400 text-sm mb-6">
@@ -79,7 +82,13 @@ export default function ProductDetailPage() {
           >
             {/* Images */}
             <div className="space-y-4">
-              <div className="aspect-square bg-navy-900 rounded-2xl overflow-hidden border border-white/[0.07]">
+              <div
+                className="aspect-square rounded-2xl overflow-hidden"
+                style={{
+                  backgroundColor: "var(--bg-secondary)",
+                  border: "1px solid var(--border-color)",
+                }}
+              >
                 <img
                   src={product.images?.[selectedImg] || PLACEHOLDER}
                   alt={product.name}
@@ -95,7 +104,11 @@ export default function ProductDetailPage() {
                     <button
                       key={i}
                       onClick={() => setSelectedImg(i)}
-                      className={`flex-shrink-0 w-16 h-16 rounded-xl overflow-hidden border-2 transition-all ${selectedImg === i ? "border-orange-500" : "border-white/[0.07] hover:border-white/20"}`}
+                      className={`flex-shrink-0 w-16 h-16 rounded-xl overflow-hidden border-2 transition-all ${selectedImg === i ? "border-orange-500" : "hover:border-[var(--border-hover)]"}`}
+                      style={{
+                        borderColor:
+                          selectedImg === i ? undefined : "var(--border-color)",
+                      }}
                     >
                       <img
                         src={img}
@@ -125,7 +138,10 @@ export default function ProductDetailPage() {
                 </div>
               )}
 
-              <h1 className="text-3xl lg:text-4xl font-black text-white leading-tight">
+              <h1
+                className="text-3xl lg:text-4xl font-black leading-tight"
+                style={{ color: "var(--text-primary)" }}
+              >
                 {product.name}
               </h1>
 
@@ -153,8 +169,17 @@ export default function ProductDetailPage() {
 
               {/* Description */}
               {product.description && (
-                <div className="bg-navy-800/60 rounded-xl p-4 border border-white/[0.06]">
-                  <p className="text-slate-300 text-sm leading-relaxed">
+                <div
+                  className="rounded-xl p-4"
+                  style={{
+                    backgroundColor: "var(--bg-card)",
+                    border: "1px solid var(--border-color)",
+                  }}
+                >
+                  <p
+                    className="text-sm leading-relaxed"
+                    style={{ color: "var(--text-secondary)" }}
+                  >
                     {product.description}
                   </p>
                 </div>
@@ -164,7 +189,10 @@ export default function ProductDetailPage() {
               {product.boutique && (
                 <div className="card-flat p-4 space-y-3">
                   <div className="flex justify-between items-start">
-                    <p className="text-white font-semibold text-sm">
+                    <p
+                      className="font-semibold text-sm"
+                      style={{ color: "var(--text-primary)" }}
+                    >
                       Vendu par {product.boutique.name}
                     </p>
                     <Link

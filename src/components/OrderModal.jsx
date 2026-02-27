@@ -66,7 +66,11 @@ export default function OrderModal({
       // On redirige avec le premier produit pour le visuel du succès
       navigate("/order-success", {
         state: {
-          order: { customerName: form.customerName },
+          order: {
+            customerName: form.customerName,
+            customerPhone: form.customerPhone,
+            customerLocation: form.customerLocation,
+          },
           product: activeItems[0],
           isMulti: activeItems.length > 1,
         },

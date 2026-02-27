@@ -28,7 +28,13 @@ export default function BoutiqueCard({ boutique, index = 0 }) {
           />
         ) : (
           <div className="absolute inset-0 flex items-center justify-center">
-            <div className="w-16 h-16 bg-white/[0.06] rounded-2xl flex items-center justify-center backdrop-blur-sm border border-white/[0.08]">
+            <div
+              className="w-16 h-16 rounded-2xl flex items-center justify-center backdrop-blur-sm"
+              style={{
+                background: "var(--bg-card)",
+                border: "1px solid var(--border-color)",
+              }}
+            >
               <span className="text-3xl">🏪</span>
             </div>
           </div>
@@ -55,19 +61,28 @@ export default function BoutiqueCard({ boutique, index = 0 }) {
       {/* Contenu */}
       <div className="p-5 flex flex-col gap-2.5 flex-1">
         <div className="flex items-start justify-between gap-2">
-          <h3 className="text-white font-bold text-base leading-snug group-hover:text-orange-300 transition-colors duration-300">
+          <h3
+            className="font-bold text-base leading-snug group-hover:text-orange-300 transition-colors duration-300"
+            style={{ color: "var(--text-primary)" }}
+          >
             {boutique.name}
           </h3>
         </div>
 
         {boutique.description && (
-          <p className="text-slate-400 text-xs line-clamp-2 leading-relaxed">
+          <p
+            className="text-xs line-clamp-2 leading-relaxed"
+            style={{ color: "var(--text-secondary)" }}
+          >
             {boutique.description}
           </p>
         )}
 
-        <div className="mt-auto pt-3 border-t border-white/[0.06] flex items-center justify-between">
-          <span className="text-slate-500 text-xs">
+        <div
+          className="mt-auto pt-3 flex items-center justify-between"
+          style={{ borderTop: "1px solid var(--border-color)" }}
+        >
+          <span className="text-xs" style={{ color: "var(--text-tertiary)" }}>
             {boutique.address || "Côte d'Ivoire"}
           </span>
           <Link

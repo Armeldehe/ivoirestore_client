@@ -86,11 +86,11 @@ export default function OrderDetailModal({
             exit={{ opacity: 0, scale: 0.95, y: 24 }}
             className="fixed inset-0 z-[70] flex items-center justify-center p-4 pointer-events-none"
           >
-            <div className="w-full max-w-lg bg-navy-900 rounded-2xl border border-white/[0.08] shadow-2xl max-h-[90vh] overflow-y-auto pointer-events-auto">
+            <div className="w-full max-w-lg bg-[var(--bg-primary)] rounded-2xl border border-[var(--border-color)] shadow-2xl max-h-[90vh] overflow-y-auto pointer-events-auto">
               {/* Header */}
-              <div className="flex items-center justify-between px-6 py-5 border-b border-white/[0.08] sticky top-0 bg-navy-900 z-10">
+              <div className="flex items-center justify-between px-6 py-5 border-b border-[var(--border-color)] sticky top-0 bg-[var(--bg-primary)] z-10">
                 <div>
-                  <h2 className="font-bold text-white text-lg">
+                  <h2 className="font-bold text-[var(--text-primary)] text-lg">
                     Détails de la commande
                   </h2>
                   <p className="text-slate-500 text-xs flex items-center gap-1.5 mt-0.5">
@@ -104,7 +104,7 @@ export default function OrderDetailModal({
 
               <div className="p-6 space-y-8">
                 {/* Status and Date */}
-                <div className="flex flex-wrap items-center justify-between bg-white/[0.03] p-4 rounded-xl border border-white/[0.05] gap-6">
+                <div className="flex flex-wrap items-center justify-between bg-[var(--bg-hover)] p-4 rounded-xl border border-[var(--border-color)] gap-6">
                   <div className="flex flex-col gap-1">
                     <p className="text-slate-500 text-[10px] uppercase font-bold tracking-widest">
                       Statut actuel
@@ -120,7 +120,7 @@ export default function OrderDetailModal({
                       value={order.status}
                       disabled={updating}
                       onChange={(e) => handleStatusChange(e.target.value)}
-                      className="bg-white/5 border border-white/10 rounded-lg px-2 py-1 text-xs text-white cursor-pointer hover:border-orange-500/50 transition-colors focus:outline-none focus:ring-1 focus:ring-orange-500 disabled:opacity-50"
+                      className="bg-[var(--bg-hover)] border border-[var(--border-color)] rounded-lg px-2 py-1 text-xs text-[var(--text-primary)] cursor-pointer hover:border-orange-500/50 transition-colors focus:outline-none focus:ring-1 focus:ring-orange-500 disabled:opacity-50"
                     >
                       {STATUS_OPTIONS.map((s) => (
                         <option
@@ -138,7 +138,7 @@ export default function OrderDetailModal({
                     <p className="text-slate-500 text-[10px] uppercase font-bold tracking-widest mb-1">
                       Passée le
                     </p>
-                    <p className="text-white text-sm font-medium flex items-center gap-1.5 justify-end">
+                    <p className="text-[var(--text-primary)] text-sm font-medium flex items-center gap-1.5 justify-end">
                       <HiCalendar className="w-4 h-4 text-slate-500" />
                       {new Date(order.createdAt).toLocaleDateString("fr-FR", {
                         day: "numeric",
@@ -151,20 +151,20 @@ export default function OrderDetailModal({
 
                 {/* Customer Section */}
                 <div className="space-y-4">
-                  <h3 className="text-white font-bold text-sm flex items-center gap-2">
+                  <h3 className="text-[var(--text-primary)] font-bold text-sm flex items-center gap-2">
                     <HiUser className="w-4 h-4 text-orange-400" /> Informations
                     Client
                   </h3>
                   <div className="grid gap-3">
-                    <div className="flex flex-col p-3 bg-white/[0.03] rounded-xl border border-white/[0.05]">
+                    <div className="flex flex-col p-3 bg-[var(--bg-hover)] rounded-xl border border-[var(--border-color)]">
                       <span className="text-slate-500 text-[10px] uppercase font-bold mb-0.5">
                         Nom complet
                       </span>
-                      <span className="text-white font-semibold">
+                      <span className="text-[var(--text-primary)] font-semibold">
                         {order.customerName}
                       </span>
                     </div>
-                    <div className="flex flex-col p-3 bg-white/[0.03] rounded-xl border border-white/[0.05]">
+                    <div className="flex flex-col p-3 bg-[var(--bg-hover)] rounded-xl border border-[var(--border-color)]">
                       <span className="text-slate-500 text-[10px] uppercase font-bold mb-0.5">
                         Téléphone
                       </span>
@@ -175,11 +175,11 @@ export default function OrderDetailModal({
                         <HiPhone className="w-4 h-4" /> {order.customerPhone}
                       </a>
                     </div>
-                    <div className="flex flex-col p-3 bg-white/[0.03] rounded-xl border border-white/[0.05]">
+                    <div className="flex flex-col p-3 bg-[var(--bg-hover)] rounded-xl border border-[var(--border-color)]">
                       <span className="text-slate-500 text-[10px] uppercase font-bold mb-0.5">
                         Lieu de livraison
                       </span>
-                      <span className="text-slate-300 text-sm flex items-start gap-1.5">
+                      <span className="text-[var(--text-secondary)] text-sm flex items-start gap-1.5">
                         <HiLocationMarker className="w-4 h-4 text-slate-500 mt-0.5" />
                         {order.customerLocation}
                       </span>
@@ -189,12 +189,12 @@ export default function OrderDetailModal({
 
                 {/* Product Section */}
                 <div className="space-y-4">
-                  <h3 className="text-white font-bold text-sm flex items-center gap-2">
+                  <h3 className="text-[var(--text-primary)] font-bold text-sm flex items-center gap-2">
                     <HiShoppingBag className="w-4 h-4 text-orange-400" />{" "}
                     Article commandé
                   </h3>
-                  <div className="p-4 bg-navy-800 rounded-2xl border border-white/[0.05] flex gap-4">
-                    <div className="w-20 h-20 bg-navy-900 rounded-xl overflow-hidden flex-shrink-0">
+                  <div className="p-4 bg-[var(--bg-secondary)] rounded-2xl border border-[var(--border-color)] flex gap-4">
+                    <div className="w-20 h-20 bg-[var(--bg-primary)] rounded-xl overflow-hidden flex-shrink-0">
                       <img
                         src={
                           order.product?.images?.[0] ||
@@ -205,10 +205,10 @@ export default function OrderDetailModal({
                       />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="text-white font-bold mb-1 truncate">
+                      <p className="text-[var(--text-primary)] font-bold mb-1 truncate">
                         {order.product?.name || "Produit supprimé"}
                       </p>
-                      <p className="text-slate-400 text-xs mb-3">
+                      <p className="text-[var(--text-secondary)] text-xs mb-3">
                         Vendu par :{" "}
                         <span className="text-orange-400 font-medium">
                           {order.boutique?.name || "N/A"}
@@ -219,7 +219,7 @@ export default function OrderDetailModal({
                           {formatPrice(order.product?.price || 0)} x{" "}
                           {order.quantity}
                         </div>
-                        <div className="text-white font-black text-xl">
+                        <div className="text-[var(--text-primary)] font-black text-xl">
                           {formatPrice(
                             order.totalPrice ||
                               order.product?.price * order.quantity ||
@@ -238,7 +238,7 @@ export default function OrderDetailModal({
                       <HiShieldCheck className="w-5 h-5" />
                     </div>
                     <div>
-                      <p className="text-white font-bold text-sm">
+                      <p className="text-[var(--text-primary)] font-bold text-sm">
                         Commission IvoireStore
                       </p>
                       <p className="text-orange-300 text-[10px]">
@@ -253,7 +253,7 @@ export default function OrderDetailModal({
               </div>
 
               {/* Footer Action */}
-              <div className="p-6 border-t border-white/[0.08] flex gap-3">
+              <div className="p-6 border-t border-[var(--border-color)] flex gap-3">
                 <button
                   onClick={onClose}
                   className="btn-secondary w-full justify-center"

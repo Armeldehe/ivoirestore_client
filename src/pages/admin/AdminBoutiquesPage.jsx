@@ -24,8 +24,10 @@ function ConfirmModal({ isOpen, onClose, onConfirm, title, message, loading }) {
           className="glass-card p-6 max-w-sm w-full"
           onClick={(e) => e.stopPropagation()}
         >
-          <h3 className="text-white font-bold text-lg mb-2">{title}</h3>
-          <p className="text-slate-400 text-sm mb-6">{message}</p>
+          <h3 className="text-[var(--text-primary)] font-bold text-lg mb-2">
+            {title}
+          </h3>
+          <p className="text-[var(--text-secondary)] text-sm mb-6">{message}</p>
           <div className="flex gap-3 justify-end">
             <button onClick={onClose} className="btn-ghost text-sm">
               Annuler
@@ -94,7 +96,9 @@ export default function AdminBoutiquesPage() {
       <div className="space-y-5">
         {/* Header */}
         <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center justify-between">
-          <h2 className="text-white font-bold text-lg">Boutiques</h2>
+          <h2 className="text-[var(--text-primary)] font-bold text-lg">
+            Boutiques
+          </h2>
           <Link
             to="/admin/boutiques/add"
             className="btn-primary text-sm py-2.5 px-4"
@@ -167,7 +171,9 @@ export default function AdminBoutiquesPage() {
                     >
                       <td>
                         <div>
-                          <p className="text-white font-semibold">{b.name}</p>
+                          <p className="text-[var(--text-primary)] font-semibold">
+                            {b.name}
+                          </p>
                           {b.description && (
                             <p className="text-slate-500 text-xs line-clamp-1 max-w-[180px]">
                               {b.description}
@@ -175,10 +181,12 @@ export default function AdminBoutiquesPage() {
                           )}
                         </div>
                       </td>
-                      <td className="text-slate-400 max-w-[140px] truncate">
+                      <td className="text-[var(--text-secondary)] max-w-[140px] truncate">
                         {b.address || "—"}
                       </td>
-                      <td className="text-slate-400">{b.phone || "—"}</td>
+                      <td className="text-[var(--text-secondary)]">
+                        {b.phone || "—"}
+                      </td>
                       <td className="text-orange-400 font-semibold">
                         {b.commissionRate}%
                       </td>
@@ -197,7 +205,7 @@ export default function AdminBoutiquesPage() {
                       <td>
                         <button
                           onClick={() => setDeleteTarget(b)}
-                          className="p-2 bg-white/5 hover:bg-red-500/10 rounded-lg text-slate-400 hover:text-red-400 transition-all"
+                          className="p-2 bg-[var(--bg-hover)] hover:bg-red-500/10 rounded-lg text-[var(--text-secondary)] hover:text-red-400 transition-all"
                           title="Supprimer"
                         >
                           <HiTrash className="w-3.5 h-3.5" />
@@ -210,7 +218,7 @@ export default function AdminBoutiquesPage() {
             </table>
           </div>
           {totalPages > 1 && (
-            <div className="flex items-center justify-between px-5 py-4 border-t border-white/[0.07]">
+            <div className="flex items-center justify-between px-5 py-4 border-t border-[var(--border-color)]">
               <button
                 onClick={() => setPage((p) => Math.max(1, p - 1))}
                 disabled={page === 1}
@@ -218,7 +226,7 @@ export default function AdminBoutiquesPage() {
               >
                 ← Précédent
               </button>
-              <span className="text-slate-400 text-sm">
+              <span className="text-[var(--text-secondary)] text-sm">
                 Page {page} / {totalPages}
               </span>
               <button

@@ -44,7 +44,7 @@ export default function HeroSection() {
           {/* Left — Content */}
           <div className="flex-1 text-center lg:text-left">
             {/* Badge */}
-            <motion.div
+            {/* <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: STAGGER * 0 }}
@@ -52,7 +52,7 @@ export default function HeroSection() {
             >
               <HiSparkles className="w-4 h-4 text-orange-400 animate-pulse" />
               La marketplace premium de Côte d'Ivoire
-            </motion.div>
+            </motion.div> */}
 
             {/* Title */}
             <motion.h1
@@ -63,13 +63,16 @@ export default function HeroSection() {
                 duration: 0.6,
                 ease: [0.22, 1, 0.36, 1],
               }}
-              className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-black text-white leading-[1.06] tracking-tight mb-5"
+              className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-black leading-[1.06] tracking-tight mb-5"
+              style={{ color: "var(--text-primary)" }}
             >
               IvoireStore
               <br />
               <span className="text-gradient-orange">Vos boutiques</span>
               <br />
-              <span className="text-slate-300">locales en un clic</span>
+              <span style={{ color: "var(--text-secondary)" }}>
+                locales en un clic
+              </span>
             </motion.h1>
 
             {/* Slogan */}
@@ -77,7 +80,8 @@ export default function HeroSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: STAGGER * 2 }}
-              className="text-lg text-slate-400 font-medium mb-3 italic"
+              className="text-lg font-medium mb-3 italic"
+              style={{ color: "var(--text-secondary)" }}
             >
               "Vos boutiques, vos offres, votre livraison"
             </motion.p>
@@ -87,7 +91,8 @@ export default function HeroSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: STAGGER * 3 }}
-              className="text-slate-400 max-w-lg mx-auto lg:mx-0 mb-10 leading-relaxed"
+              className="max-w-lg mx-auto lg:mx-0 mb-10 leading-relaxed"
+              style={{ color: "var(--text-secondary)" }}
             >
               Des milliers de produits authentiques des meilleures boutiques
               ivoiriennes. Paiement à la livraison, aucun prépaiement requis.
@@ -121,7 +126,8 @@ export default function HeroSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: STAGGER * 5 }}
-              className="grid grid-cols-3 gap-6 mt-12 pt-10 border-t border-white/[0.06] max-w-sm mx-auto lg:mx-0"
+              className="grid grid-cols-3 gap-6 mt-12 pt-10 max-w-sm mx-auto lg:mx-0"
+              style={{ borderTop: "1px solid var(--border-color)" }}
             >
               {[
                 // { v: "500+", l: "Produits" },
@@ -141,7 +147,7 @@ export default function HeroSection() {
           {/* Right — Logo animé + floating cards */}
           <motion.div
             initial={{ opacity: 0, scale: 0.85 }}
-            animate={{ opacity: 1, scale: 1 }}
+            animate={{ opacity: 1, scale: 1.15 }}
             transition={{
               delay: STAGGER * 2,
               duration: 0.7,
@@ -181,7 +187,12 @@ export default function HeroSection() {
             >
               <div className="flex items-center gap-1">
                 <HiStar className="w-4 h-4 text-amber-400" />
-                <span className="text-white text-xs font-bold">4.9/5</span>
+                <span
+                  className="text-xs font-bold"
+                  style={{ color: "var(--text-primary)" }}
+                >
+                  4.9/5
+                </span>
               </div>
               <p className="text-slate-400 text-[10px]">128 avis</p>
             </motion.div>
@@ -197,7 +208,7 @@ export default function HeroSection() {
             </motion.div>
 
             {/* Floating badge 3 */}
-            <motion.div
+            {/* <motion.div
               animate={{ y: [-4, 4, -4] }}
               transition={{ duration: 3.5, repeat: Infinity, delay: 1 }}
               className="absolute top-1/2 -left-2 md:left-0 glass-card px-3 py-2 border border-blue-500/20 shadow-lg hidden lg:block"
@@ -206,7 +217,7 @@ export default function HeroSection() {
                 🏪 50+ Boutiques
               </p>
               <p className="text-slate-400 text-[10px]">Vérifiées</p>
-            </motion.div>
+            </motion.div> */}
           </motion.div>
         </div>
       </div>

@@ -14,12 +14,11 @@ import { HiChevronLeft, HiChevronRight } from "react-icons/hi";
  * - Snap scrolling
  * - Invisible scrollbar
  * - Progressive reveal animations
- *
- * Props:
- * - children: React nodes (cards)
- * - autoScrollSpeed: ms interval (default 4000)
- * - itemWidth: CSS class override for item width
+ * - Click-through: short taps navigate, drags scroll
  */
+
+const DRAG_THRESHOLD = 5; // px — ignore drags smaller than this
+
 export default function HorizontalCarousel({
   children,
   autoScrollSpeed = 4000,
@@ -36,6 +35,7 @@ export default function HorizontalCarousel({
     velocity: 0,
     lastX: 0,
     lastTime: 0,
+    hasDragged: false, // true only if mouse moved beyond threshold
   });
   const autoScrollRef = useRef(null);
   const rafRef = useRef(null);
@@ -88,22 +88,37 @@ export default function HorizontalCarousel({
     if (e.pointerType === "touch") return; // let touch scroll handle it
     const el = scrollRef.current;
     if (!el) return;
-    setIsDragging(true);
-    el.setPointerCapture(e.pointerId);
+    // Do NOT setPointerCapture here — that would steal clicks from child Links.
+    // We'll capture only after the drag threshold is exceeded.
     dragState.current = {
       startX: e.clientX,
       scrollLeft: el.scrollLeft,
       velocity: 0,
       lastX: e.clientX,
       lastTime: Date.now(),
+      hasDragged: false,
+      pointerId: e.pointerId,
+      pointerActive: true,
     };
   };
 
   const onPointerMove = (e) => {
-    if (!isDragging || e.pointerType === "touch") return;
+    if (!dragState.current.pointerActive || e.pointerType === "touch") return;
     const el = scrollRef.current;
     if (!el) return;
     const dx = e.clientX - dragState.current.startX;
+
+    // Only start scrolling after threshold is crossed
+    if (!dragState.current.hasDragged) {
+      if (Math.abs(dx) < DRAG_THRESHOLD) return;
+      dragState.current.hasDragged = true;
+      setIsDragging(true);
+      // NOW capture the pointer so we keep getting events even outside the element
+      try {
+        el.setPointerCapture(e.pointerId);
+      } catch (_) {}
+    }
+
     el.scrollLeft = dragState.current.scrollLeft - dx;
     // track velocity
     const now = Date.now();
@@ -116,11 +131,18 @@ export default function HorizontalCarousel({
   };
 
   const onPointerUp = (e) => {
-    if (!isDragging || e.pointerType === "touch") return;
+    if (!dragState.current.pointerActive || e.pointerType === "touch") return;
+    dragState.current.pointerActive = false;
     setIsDragging(false);
     const el = scrollRef.current;
     if (!el) return;
-    el.releasePointerCapture(e.pointerId);
+    try {
+      el.releasePointerCapture(e.pointerId);
+    } catch (_) {}
+
+    // If we didn't actually drag, do nothing — the click naturally reaches child Links
+    if (!dragState.current.hasDragged) return;
+
     // apply inertia
     let velocity = -dragState.current.velocity * 800;
     const decay = () => {
@@ -131,6 +153,16 @@ export default function HorizontalCarousel({
     };
     if (rafRef.current) cancelAnimationFrame(rafRef.current);
     rafRef.current = requestAnimationFrame(decay);
+  };
+
+  // Block click events only when the user was actually dragging
+  const onClickCapture = (e) => {
+    if (dragState.current.hasDragged) {
+      e.preventDefault();
+      e.stopPropagation();
+      // Reset so next click works normally
+      dragState.current.hasDragged = false;
+    }
   };
 
   useEffect(() => {
@@ -169,9 +201,15 @@ export default function HorizontalCarousel({
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
         onPointerUp={onPointerUp}
-        onPointerCancel={() => setIsDragging(false)}
+        onPointerCancel={() => {
+          dragState.current.pointerActive = false;
+          setIsDragging(false);
+        }}
+        onClickCapture={onClickCapture}
         className={`flex gap-5 overflow-x-auto pb-4 scroll-smooth snap-x snap-mandatory ${
-          isDragging ? "cursor-grabbing select-none" : "cursor-grab"
+          isDragging && dragState.current.hasDragged
+            ? "cursor-grabbing select-none"
+            : "cursor-grab"
         }`}
         style={{
           scrollbarWidth: "none",
@@ -218,7 +256,12 @@ export default function HorizontalCarousel({
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0 }}
           onClick={() => scrollBy(-1)}
-          className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 z-10 w-11 h-11 bg-white/[0.07] hover:bg-orange-500/20 border border-white/[0.12] hover:border-orange-500/40 backdrop-blur-xl rounded-full flex items-center justify-center text-white hover:text-orange-400 transition-all duration-300 shadow-xl shadow-black/20 opacity-0 group-hover/carousel:opacity-100"
+          className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 z-10 w-11 h-11 backdrop-blur-xl rounded-full flex items-center justify-center transition-all duration-300 shadow-xl opacity-0 group-hover/carousel:opacity-100"
+          style={{
+            backgroundColor: "var(--bg-glass)",
+            border: "1px solid var(--border-color)",
+            color: "var(--text-primary)",
+          }}
           aria-label="Défiler à gauche"
         >
           <HiChevronLeft className="w-5 h-5" />
@@ -230,7 +273,12 @@ export default function HorizontalCarousel({
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0 }}
           onClick={() => scrollBy(1)}
-          className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 z-10 w-11 h-11 bg-white/[0.07] hover:bg-orange-500/20 border border-white/[0.12] hover:border-orange-500/40 backdrop-blur-xl rounded-full flex items-center justify-center text-white hover:text-orange-400 transition-all duration-300 shadow-xl shadow-black/20 opacity-0 group-hover/carousel:opacity-100"
+          className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 z-10 w-11 h-11 backdrop-blur-xl rounded-full flex items-center justify-center transition-all duration-300 shadow-xl opacity-0 group-hover/carousel:opacity-100"
+          style={{
+            backgroundColor: "var(--bg-glass)",
+            border: "1px solid var(--border-color)",
+            color: "var(--text-primary)",
+          }}
           aria-label="Défiler à droite"
         >
           <HiChevronRight className="w-5 h-5" />
@@ -239,10 +287,22 @@ export default function HorizontalCarousel({
 
       {/* Edge gradient fades */}
       {canScrollLeft && (
-        <div className="absolute left-0 top-0 bottom-4 w-16 bg-gradient-to-r from-navy-950 to-transparent pointer-events-none z-[1]" />
+        <div
+          className="absolute left-0 top-0 bottom-4 w-16 pointer-events-none z-[1]"
+          style={{
+            background:
+              "linear-gradient(to right, var(--bg-primary), transparent)",
+          }}
+        />
       )}
       {canScrollRight && (
-        <div className="absolute right-0 top-0 bottom-4 w-16 bg-gradient-to-l from-navy-950 to-transparent pointer-events-none z-[1]" />
+        <div
+          className="absolute right-0 top-0 bottom-4 w-16 pointer-events-none z-[1]"
+          style={{
+            background:
+              "linear-gradient(to left, var(--bg-primary), transparent)",
+          }}
+        />
       )}
     </div>
   );

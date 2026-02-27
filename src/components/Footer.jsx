@@ -12,12 +12,18 @@ const trustBadges = [
 
 export default function Footer() {
   return (
-    <footer className="relative border-t border-white/[0.06] bg-navy-950 mt-20 overflow-hidden">
+    <footer
+      className="relative mt-20 overflow-hidden"
+      style={{
+        backgroundColor: "var(--bg-secondary)",
+        borderTop: "1px solid var(--border-color)",
+      }}
+    >
       {/* Gradient accent line */}
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-orange-500/50 to-transparent" />
 
       {/* Trust badges strip */}
-      <div className="border-b border-white/[0.06]">
+      <div style={{ borderBottom: "1px solid var(--border-color)" }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {trustBadges.map((b) => (
@@ -25,10 +31,19 @@ export default function Footer() {
                 key={b.label}
                 className="flex items-center gap-3 justify-center"
               >
-                <div className="w-9 h-9 bg-white/[0.04] rounded-lg flex items-center justify-center border border-white/[0.06]">
+                <div
+                  className="w-9 h-9 rounded-lg flex items-center justify-center"
+                  style={{
+                    background: "var(--bg-card)",
+                    border: "1px solid var(--border-color)",
+                  }}
+                >
                   <b.icon className={`w-4.5 h-4.5 ${b.color}`} />
                 </div>
-                <span className="text-slate-300 text-xs font-medium">
+                <span
+                  className="text-xs font-medium"
+                  style={{ color: "var(--text-secondary)" }}
+                >
                   {b.label}
                 </span>
               </div>
@@ -48,10 +63,16 @@ export default function Footer() {
                 className="h-10 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
               />
             </Link>
-            <p className="text-slate-500 text-sm italic mb-2 font-medium">
+            <p
+              className="text-sm italic mb-2 font-medium"
+              style={{ color: "var(--text-tertiary)" }}
+            >
               "Vos boutiques, vos offres, votre livraison"
             </p>
-            <p className="text-slate-500 text-sm leading-relaxed max-w-xs mb-4">
+            <p
+              className="text-sm leading-relaxed max-w-xs mb-4"
+              style={{ color: "var(--text-tertiary)" }}
+            >
               La marketplace premium ivoirienne. Des produits authentiques des
               meilleures boutiques de Côte d'Ivoire.
             </p>
@@ -60,13 +81,15 @@ export default function Footer() {
             <div className="space-y-2 mb-5">
               <a
                 href="tel:+2250702838206"
-                className="flex items-center gap-2 text-slate-400 text-sm hover:text-orange-400 transition-colors"
+                className="flex items-center gap-2 text-sm hover:text-orange-400 transition-colors"
+                style={{ color: "var(--text-secondary)" }}
               >
                 <HiPhone className="w-3.5 h-3.5" /> +225 07 02 83 82 06
               </a>
               <a
                 href="mailto:contact@ivoirestore.com"
-                className="flex items-center gap-2 text-slate-400 text-sm hover:text-orange-400 transition-colors"
+                className="flex items-center gap-2 text-sm hover:text-orange-400 transition-colors"
+                style={{ color: "var(--text-secondary)" }}
               >
                 <HiMail className="w-3.5 h-3.5" /> contact@ivoirestore.com
               </a>
@@ -81,7 +104,8 @@ export default function Footer() {
                 <a
                   key={i}
                   href={href}
-                  className="w-10 h-10 glass-card flex items-center justify-center text-slate-400 hover:text-orange-400 hover:border-orange-500/40 hover:shadow-md hover:shadow-orange-500/10 transition-all duration-300"
+                  className="w-10 h-10 glass-card flex items-center justify-center hover:text-orange-400 hover:border-orange-500/40 hover:shadow-md hover:shadow-orange-500/10 transition-all duration-300"
+                  style={{ color: "var(--text-secondary)" }}
                 >
                   <Icon className="w-4 h-4" />
                 </a>
@@ -91,7 +115,10 @@ export default function Footer() {
 
           {/* Navigation */}
           <div>
-            <h3 className="text-white font-semibold text-sm mb-5">
+            <h3
+              className="font-semibold text-sm mb-5"
+              style={{ color: "var(--text-primary)" }}
+            >
               Navigation
             </h3>
             <ul className="space-y-3">
@@ -105,7 +132,8 @@ export default function Footer() {
                 <li key={link.to}>
                   <Link
                     to={link.to}
-                    className="text-slate-400 hover:text-orange-400 text-sm transition-colors duration-200 hover:translate-x-1 inline-block"
+                    className="hover:text-orange-400 text-sm transition-colors duration-200 hover:translate-x-1 inline-block"
+                    style={{ color: "var(--text-secondary)" }}
                   >
                     {link.l}
                   </Link>
@@ -116,7 +144,10 @@ export default function Footer() {
 
           {/* Legal */}
           <div>
-            <h3 className="text-white font-semibold text-sm mb-5">
+            <h3
+              className="font-semibold text-sm mb-5"
+              style={{ color: "var(--text-primary)" }}
+            >
               Informations légales
             </h3>
             <ul className="space-y-3">
@@ -130,7 +161,8 @@ export default function Footer() {
                 <li key={link.to}>
                   <Link
                     to={link.to}
-                    className="text-slate-400 hover:text-orange-400 text-sm transition-colors duration-200 hover:translate-x-1 inline-block"
+                    className="hover:text-orange-400 text-sm transition-colors duration-200 hover:translate-x-1 inline-block"
+                    style={{ color: "var(--text-secondary)" }}
                   >
                     {link.l}
                   </Link>
@@ -141,8 +173,16 @@ export default function Footer() {
 
           {/* Services */}
           <div>
-            <h3 className="text-white font-semibold text-sm mb-5">Services</h3>
-            <ul className="space-y-3 text-sm text-slate-400">
+            <h3
+              className="font-semibold text-sm mb-5"
+              style={{ color: "var(--text-primary)" }}
+            >
+              Services
+            </h3>
+            <ul
+              className="space-y-3 text-sm"
+              style={{ color: "var(--text-secondary)" }}
+            >
               <li className="flex items-center gap-2">
                 <span className="text-orange-400">📦</span> Paiement à la
                 livraison
@@ -164,16 +204,25 @@ export default function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="border-t border-white/[0.06] mt-10 pt-6 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-slate-600 text-sm">
+        <div
+          className="mt-10 pt-6 flex flex-col md:flex-row items-center justify-between gap-4"
+          style={{ borderTop: "1px solid var(--border-color)" }}
+        >
+          <p className="text-sm" style={{ color: "var(--text-tertiary)" }}>
             © {new Date().getFullYear()} IvoireStore. Tous droits réservés.
           </p>
           <div className="flex items-center gap-4">
-            <div className="flex items-center gap-2 text-slate-600 text-xs">
+            <div
+              className="flex items-center gap-2 text-xs"
+              style={{ color: "var(--text-tertiary)" }}
+            >
               <HiShieldCheck className="w-4 h-4 text-green-500/60" />
               Site sécurisé
             </div>
-            <p className="text-slate-700 text-xs flex items-center gap-1">
+            <p
+              className="text-xs flex items-center gap-1"
+              style={{ color: "var(--text-muted)" }}
+            >
               Fait avec{" "}
               <HiHeart className="text-orange-500 w-3 h-3 animate-pulse" /> en
               Côte d'Ivoire

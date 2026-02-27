@@ -1,15 +1,15 @@
-import { useState } from 'react';
-import { useNavigate, Navigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { HiLockClosed, HiMail } from 'react-icons/hi';
-import { useAuth } from '../../context/AuthContext';
+import { useState } from "react";
+import { useNavigate, Navigate } from "react-router-dom";
+import { motion } from "framer-motion";
+import { HiLockClosed, HiMail } from "react-icons/hi";
+import { useAuth } from "../../context/AuthContext";
 
 export default function AdminLoginPage() {
   const { login, isAuth } = useAuth();
   const navigate = useNavigate();
-  const [form, setForm]     = useState({ email: '', password: '' });
+  const [form, setForm] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
-  const [error, setError]   = useState('');
+  const [error, setError] = useState("");
 
   if (isAuth) {
     return <Navigate to="/admin" replace />;
@@ -17,21 +17,27 @@ export default function AdminLoginPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!form.email || !form.password) { setError('Remplissez tous les champs.'); return; }
+    if (!form.email || !form.password) {
+      setError("Remplissez tous les champs.");
+      return;
+    }
     setLoading(true);
-    setError('');
+    setError("");
     try {
       await login(form.email, form.password);
-      navigate('/admin', { replace: true });
+      navigate("/admin", { replace: true });
     } catch (err) {
-      setError(err.message || 'Email ou mot de passe incorrect.');
+      setError(err.message || "Email ou mot de passe incorrect.");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-navy-950 flex items-center justify-center px-4">
+    <div
+      className="min-h-screen flex items-center justify-center px-4"
+      style={{ backgroundColor: "var(--bg-primary)" }}
+    >
       {/* Background */}
       <div className="absolute inset-0 hero-bg pointer-events-none" />
       <div className="absolute inset-0 grid-bg pointer-events-none opacity-40" />
@@ -43,14 +49,34 @@ export default function AdminLoginPage() {
         className="relative w-full max-w-md"
       >
         {/* Card */}
-        <div className="bg-navy-900 border border-white/[0.08] rounded-2xl shadow-2xl overflow-hidden">
+        <div
+          className="rounded-2xl shadow-2xl overflow-hidden"
+          style={{
+            backgroundColor: "var(--bg-card)",
+            border: "1px solid var(--border-color)",
+          }}
+        >
           {/* Header */}
-          <div className="px-8 pt-8 pb-6 text-center border-b border-white/[0.07]">
+          <div
+            className="px-8 pt-8 pb-6 text-center"
+            style={{ borderBottom: "1px solid var(--border-color)" }}
+          >
             <div className="flex justify-center mb-4">
-              <img src="/logo_ivoirestore.png" alt="IvoireStore" className="h-12 w-auto" />
+              <img
+                src="/logo_ivoirestore.png"
+                alt="IvoireStore"
+                className="h-12 w-auto"
+              />
             </div>
-            <h1 className="text-xl font-black text-white">Administration</h1>
-            <p className="text-slate-500 text-sm mt-1">Connectez-vous pour accéder au dashboard</p>
+            <h1
+              className="text-xl font-black"
+              style={{ color: "var(--text-primary)" }}
+            >
+              Administration
+            </h1>
+            <p className="text-slate-500 text-sm mt-1">
+              Connectez-vous pour accéder au dashboard
+            </p>
           </div>
 
           {/* Form */}
@@ -66,7 +92,10 @@ export default function AdminLoginPage() {
             )}
 
             <div>
-              <label className="block text-sm font-medium text-slate-300 mb-2 flex items-center gap-1.5">
+              <label
+                className="block text-sm font-medium mb-2 flex items-center gap-1.5"
+                style={{ color: "var(--text-secondary)" }}
+              >
                 <HiMail className="w-4 h-4" /> Email
               </label>
               <input
@@ -74,14 +103,19 @@ export default function AdminLoginPage() {
                 autoComplete="email"
                 placeholder="admin@ivoirestore.ci"
                 value={form.email}
-                onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
+                onChange={(e) =>
+                  setForm((f) => ({ ...f, email: e.target.value }))
+                }
                 className="input-field"
                 required
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-300 mb-2 flex items-center gap-1.5">
+              <label
+                className="block text-sm font-medium mb-2 flex items-center gap-1.5"
+                style={{ color: "var(--text-secondary)" }}
+              >
                 <HiLockClosed className="w-4 h-4" /> Mot de passe
               </label>
               <input
@@ -89,23 +123,46 @@ export default function AdminLoginPage() {
                 autoComplete="current-password"
                 placeholder="••••••••"
                 value={form.password}
-                onChange={(e) => setForm((f) => ({ ...f, password: e.target.value }))}
+                onChange={(e) =>
+                  setForm((f) => ({ ...f, password: e.target.value }))
+                }
                 className="input-field"
                 required
               />
             </div>
 
-            <button type="submit" disabled={loading} className="btn-primary w-full justify-center py-3.5 text-base mt-2">
+            <button
+              type="submit"
+              disabled={loading}
+              className="btn-primary w-full justify-center py-3.5 text-base mt-2"
+            >
               {loading ? (
                 <span className="flex items-center gap-2">
-                  <svg className="animate-spin w-4 h-4" viewBox="0 0 24 24" fill="none">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
+                  <svg
+                    className="animate-spin w-4 h-4"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    />
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+                    />
                   </svg>
                   Connexion...
                 </span>
               ) : (
-                <><HiLockClosed className="w-4 h-4" /> Se connecter</>
+                <>
+                  <HiLockClosed className="w-4 h-4" /> Se connecter
+                </>
               )}
             </button>
           </form>

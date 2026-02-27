@@ -65,7 +65,9 @@ export default function AdminOrdersPage() {
       <div className="space-y-6">
         {/* Header + filters */}
         <div className="flex flex-col gap-4">
-          <h2 className="text-white font-bold text-lg">Toutes les commandes</h2>
+          <h2 className="text-[var(--text-primary)] font-bold text-lg">
+            Toutes les commandes
+          </h2>
           <div className="flex flex-col sm:flex-row gap-3">
             {/* Search */}
             <div className="relative flex-1 max-w-md">
@@ -90,11 +92,15 @@ export default function AdminOrdersPage() {
               }}
               className="input-field sm:w-52 py-2.5 text-sm"
             >
-              <option value="" className="bg-navy-900">
+              <option value="" className="bg-[var(--bg-input)]">
                 Tous les statuts
               </option>
               {STATUS_OPTIONS.map((s) => (
-                <option key={s.value} value={s.value} className="bg-navy-900">
+                <option
+                  key={s.value}
+                  value={s.value}
+                  className="bg-[var(--bg-input)]"
+                >
                   {s.label}
                 </option>
               ))}
@@ -151,19 +157,19 @@ export default function AdminOrdersPage() {
                       animate={{ opacity: 1 }}
                       transition={{ delay: i * 0.03 }}
                     >
-                      <td className="text-white font-semibold whitespace-nowrap">
+                      <td className="text-[var(--text-primary)] font-semibold whitespace-nowrap">
                         {order.customerName}
                       </td>
-                      <td className="text-slate-400 whitespace-nowrap">
+                      <td className="text-[var(--text-secondary)] whitespace-nowrap">
                         {order.customerPhone}
                       </td>
-                      <td className="text-slate-400 max-w-[120px] truncate">
+                      <td className="text-[var(--text-secondary)] max-w-[120px] truncate">
                         {order.customerLocation}
                       </td>
-                      <td className="text-slate-300 max-w-[160px] truncate">
+                      <td className="text-[var(--text-secondary)] max-w-[160px] truncate">
                         {order.product?.name || "—"}
                       </td>
-                      <td className="text-slate-400 text-center">
+                      <td className="text-[var(--text-secondary)] text-center">
                         {order.quantity}
                       </td>
                       <td className="text-orange-400 font-bold whitespace-nowrap">
@@ -190,13 +196,13 @@ export default function AdminOrdersPage() {
                               onChange={(e) =>
                                 handleStatusChange(order._id, e.target.value)
                               }
-                              className="bg-transparent border border-white/10 rounded-lg px-2 py-1 text-xs text-white cursor-pointer hover:border-orange-500/50 transition-colors focus:outline-none focus:ring-1 focus:ring-orange-500"
+                              className="bg-transparent border border-[var(--border-color)] rounded-lg px-2 py-1 text-xs text-[var(--text-primary)] cursor-pointer hover:border-orange-500/50 transition-colors focus:outline-none focus:ring-1 focus:ring-orange-500"
                             >
                               {STATUS_OPTIONS.map((s) => (
                                 <option
                                   key={s.value}
                                   value={s.value}
-                                  className="bg-navy-900"
+                                  className="bg-[var(--bg-input)]"
                                 >
                                   {s.label}
                                 </option>
@@ -226,7 +232,7 @@ export default function AdminOrdersPage() {
 
           {/* Pagination */}
           {totalPages > 1 && (
-            <div className="flex items-center justify-between px-5 py-4 border-t border-white/[0.07]">
+            <div className="flex items-center justify-between px-5 py-4 border-t border-[var(--border-color)]">
               <button
                 onClick={() => setPage((p) => Math.max(1, p - 1))}
                 disabled={page === 1}
@@ -234,7 +240,7 @@ export default function AdminOrdersPage() {
               >
                 ← Précédent
               </button>
-              <span className="text-slate-400 text-sm">
+              <span className="text-[var(--text-secondary)] text-sm">
                 Page {page} / {totalPages}
               </span>
               <button
