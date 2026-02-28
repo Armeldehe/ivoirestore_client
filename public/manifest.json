@@ -1,0 +1,21 @@
+{
+  "name": "IvoireStore",
+  "short_name": "IvoireStore",
+  "description": "La marketplace premium de Côte d'Ivoire. Achetez en ligne, payez à la livraison.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#020617",
+  "theme_color": "#f97316",
+  "icons": [
+    {
+      "src": "/logo_ivoirestore.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/logo_ivoirestore.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
