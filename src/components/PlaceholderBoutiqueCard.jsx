@@ -68,7 +68,9 @@ export default function PlaceholderBoutiqueCard({ index = 0 }) {
 
         {/* CTA Button */}
         <a
-          href="mailto:contact@ivoirestore.ci"
+          href="https://wa.me/2250702838206?text=Bonjour%2C%20je%20souhaite%20vendre%20sur%20IvoireStore.%20Pouvez-vous%20m%27expliquer%20comment%20faire%20%3F"
+          target="_blank"
+          rel="noopener noreferrer"
           className="inline-flex items-center gap-2 w-full justify-center px-4 py-2.5 bg-gradient-to-r from-orange-500/15 to-orange-600/10 border border-orange-500/25 text-orange-400 text-sm font-semibold rounded-xl hover:from-orange-500/25 hover:to-orange-600/20 hover:border-orange-500/40 transition-all duration-300 group/btn"
         >
           <HiOfficeBuilding className="w-4 h-4 transition-transform group-hover/btn:scale-110" />

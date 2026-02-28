@@ -235,7 +235,9 @@ export default function HomePage() {
                 transparente, support dédié.
               </p>
               <a
-                href="mailto:contact@ivoirestore.ci"
+                href="https://wa.me/2250702838206?text=Bonjour%2C%20je%20souhaite%20vendre%20sur%20IvoireStore.%20Pouvez-vous%20m%27expliquer%20comment%20faire%20%3F"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-8 py-4 bg-white text-orange-600 font-bold rounded-xl hover:bg-orange-50 transition-colors shadow-xl"
               >
                 Nous contacter →
