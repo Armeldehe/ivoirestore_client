@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
 import { HiHeart, HiShieldCheck, HiPhone, HiMail } from "react-icons/hi";
 import { HiTruck } from "react-icons/hi2";
-import { FiInstagram, FiTwitter, FiFacebook } from "react-icons/fi";
+import { FiInstagram, FiFacebook } from "react-icons/fi";
+import { SiTiktok } from "react-icons/si";
 
 const trustBadges = [
   { icon: HiShieldCheck, label: "Paiement sécurisé", color: "text-green-400" },
@@ -97,13 +98,24 @@ export default function Footer() {
 
             <div className="flex gap-3">
               {[
-                { Icon: FiInstagram, href: "#" },
-                { Icon: FiTwitter, href: "#" },
-                { Icon: FiFacebook, href: "#" },
+                {
+                  Icon: FiInstagram,
+                  href: "https://www.instagram.com/ivoirestore_ci",
+                },
+                {
+                  Icon: SiTiktok,
+                  href: "https://www.tiktok.com/@ivoirestore.com",
+                },
+                {
+                  Icon: FiFacebook,
+                  href: "https://www.facebook.com/Ivoirestore",
+                },
               ].map(({ Icon, href }, i) => (
                 <a
                   key={i}
                   href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="w-10 h-10 glass-card flex items-center justify-center hover:text-orange-400 hover:border-orange-500/40 hover:shadow-md hover:shadow-orange-500/10 transition-all duration-300"
                   style={{ color: "var(--text-secondary)" }}
                 >
