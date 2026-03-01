@@ -70,9 +70,11 @@ export default function OrderModal({
             customerName: form.customerName,
             customerPhone: form.customerPhone,
             customerLocation: form.customerLocation,
+            quantity: activeItems[0].qty || 1,
           },
           product: activeItems[0],
           isMulti: activeItems.length > 1,
+          totalPrice: totalPrice,
         },
       });
     } catch (_) {

@@ -234,14 +234,22 @@ export default function HomePage() {
                 Vendez vos produits à travers toute la Côte d'Ivoire. Commission
                 transparente, support dédié.
               </p>
-              <a
-                href="https://wa.me/2250702838206?text=Bonjour%2C%20je%20souhaite%20vendre%20sur%20IvoireStore.%20Pouvez-vous%20m%27expliquer%20comment%20faire%20%3F"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-8 py-4 bg-white text-orange-600 font-bold rounded-xl hover:bg-orange-50 transition-colors shadow-xl"
-              >
-                Nous contacter →
-              </a>
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <Link
+                  to="/vendeur/login"
+                  className="inline-flex items-center justify-center w-full sm:w-auto px-8 py-4 bg-white/10 text-white font-bold rounded-xl hover:bg-white/20 transition-all border border-white/20 backdrop-blur-md"
+                >
+                  Se connecter à ma boutique
+                </Link>
+                <a
+                  href="https://wa.me/2250702838206?text=Bonjour%2C%20je%20souhaite%20vendre%20sur%20IvoireStore.%20Pouvez-vous%20m%27expliquer%20comment%20faire%20%3F"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center w-full sm:w-auto gap-2 px-8 py-4 bg-white text-orange-600 font-bold rounded-xl hover:bg-orange-50 transition-colors shadow-xl"
+                >
+                  Nous contacter →
+                </a>
+              </div>
             </div>
           </motion.div>
         </div>

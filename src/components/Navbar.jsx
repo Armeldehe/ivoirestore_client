@@ -28,6 +28,7 @@ export default function Navbar() {
     { to: "/", label: "Accueil" },
     { to: "/products", label: "Catalogue" },
     { to: "/boutiques", label: "Boutiques" },
+    { to: "/vendeur/login", label: "Accès Boutique" },
   ];
 
   return (

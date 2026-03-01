@@ -1,7 +1,7 @@
 import { useState, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { HiPhotograph, HiX, HiUpload, HiCheckCircle } from "react-icons/hi";
-import { uploadImage } from "../services/api";
+import { uploadImage as defaultUploadFn } from "../services/api";
 import toast from "react-hot-toast";
 
 /**
@@ -13,6 +13,7 @@ import toast from "react-hot-toast";
  * - currentImage?: string — existing image URL for preview
  * - label?: string — form label text
  * - onRemove?: () => void — callback when image is removed
+ * - uploadFn?: (endpoint, file, onProgress) => Promise — custom upload function (defaults to admin uploadImage)
  */
 export default function ImageUploader({
   endpoint,
@@ -20,6 +21,7 @@ export default function ImageUploader({
   currentImage,
   label = "Image",
   onRemove,
+  uploadFn,
 }) {
   const [dragOver, setDragOver] = useState(false);
   const [uploading, setUploading] = useState(false);
@@ -41,6 +43,8 @@ export default function ImageUploader({
     return null;
   };
 
+  const doUpload = uploadFn || defaultUploadFn;
+
   const handleUpload = useCallback(
     async (file) => {
       const validationError = validateFile(file);
@@ -59,9 +63,8 @@ export default function ImageUploader({
       setPreview(localUrl);
 
       try {
-        const data = await uploadImage(endpoint, file, (pct) =>
-          setProgress(pct),
-        );
+        const data = await doUpload(endpoint, file, (pct) => setProgress(pct));
+
         if (data.success && data.url) {
           setPreview(data.url);
           onUploadComplete(data.url);

@@ -20,57 +20,53 @@ export default function RefundPage() {
           Dernière mise à jour : Février 2026
         </p>
 
-        <div className="space-y-8 text-slate-300 text-sm leading-relaxed">
+        <div className="space-y-8 text-[var(--text-secondary)] text-sm leading-relaxed">
           <section>
-            <h2 className="text-white font-bold text-lg mb-3">
+            <h2 className="text-[var(--text-primary)] font-bold text-lg mb-3">
               1. Conditions de remboursement
             </h2>
             <p className="mb-3">
-              Un remboursement peut être demandé dans les cas suivants :
+              Un remboursement (ou échange) peut être négocié avec la boutique
+              vendeuse dans les cas suivants :
             </p>
-            <ul className="list-disc list-inside space-y-1 text-slate-400 ml-4">
+            <ul className="list-disc list-inside space-y-1 ml-4">
               <li>Produit reçu défectueux ou endommagé</li>
-              <li>Produit non conforme à la description sur la plateforme</li>
-              <li>Produit non livré après le délai maximum annoncé</li>
-              <li>Erreur de commande imputable à la boutique partenaire</li>
+              <li>
+                Produit non conforme à la description publiée par la boutique
+              </li>
+              <li>Produit de contrefaçon avérée</li>
+              <li>
+                Erreur matérielle de commande imputable à la boutique partenaire
+              </li>
             </ul>
           </section>
 
           <section>
-            <h2 className="text-white font-bold text-lg mb-3">2. Délais</h2>
+            <h2 className="text-[var(--text-primary)] font-bold text-lg mb-3">
+              2. Délais
+            </h2>
             <p>
-              La demande de remboursement doit être effectuée dans un délai de{" "}
-              <strong className="text-orange-400">48 heures</strong> après
-              réception du produit. Au-delà de ce délai, la demande pourra être
-              refusée sauf circonstances exceptionnelles. Le traitement de la
-              demande prend généralement 3 à 5 jours ouvrables après réception
-              du produit retourné par la boutique.
+              La réclamation doit être effectuée auprès de la boutique (ou du
+              support plateforme en cas de litige insoluble) dans un délai de{" "}
+              <strong className="text-orange-400">48 à 72 heures</strong> après
+              réception du produit, conformément aux politiques spécifiques de
+              chaque vendeur. Le client ayant payé à la livraison (COD) doit
+              s'adresser directement au vendeur pour la restitution des fonds.
             </p>
           </section>
 
           <section>
-            <h2 className="text-white font-bold text-lg mb-3">3. Procédure</h2>
+            <h2 className="text-[var(--text-primary)] font-bold text-lg mb-3">
+              3. Procédure relative au vendeur
+            </h2>
             <div className="space-y-3">
               <div className="flex gap-3">
                 <span className="w-7 h-7 bg-orange-500/15 rounded-lg flex items-center justify-center text-orange-400 text-xs font-bold shrink-0">
                   1
                 </span>
                 <p>
-                  Contactez notre support à{" "}
-                  <a
-                    href="mailto:contact@ivoirestore.com"
-                    className="text-orange-400 hover:text-orange-300"
-                  >
-                    contact@ivoirestore.com
-                  </a>{" "}
-                  ou au{" "}
-                  <a
-                    href="tel:+2250702838206"
-                    className="text-orange-400 hover:text-orange-300"
-                  >
-                    +225 07 02 83 82 06
-                  </a>{" "}
-                  en précisant votre numéro de commande et le motif.
+                  Contactez immédiatement le transporteur ou le numéro de la
+                  boutique partenaire qui vous a livré.
                 </p>
               </div>
               <div className="flex gap-3">
@@ -78,8 +74,8 @@ export default function RefundPage() {
                   2
                 </span>
                 <p>
-                  Fournissez des photos du produit si celui-ci est défectueux ou
-                  non conforme.
+                  Fournissez des photos preuves du produit s'il est défectueux
+                  ou non conforme.
                 </p>
               </div>
               <div className="flex gap-3">
@@ -87,8 +83,8 @@ export default function RefundPage() {
                   3
                 </span>
                 <p>
-                  Après validation de votre demande, retournez le produit dans
-                  son emballage d'origine à la boutique partenaire.
+                  Retournez le produit dans son emballage d'origine à la
+                  boutique partenaire.
                 </p>
               </div>
               <div className="flex gap-3">
@@ -96,31 +92,37 @@ export default function RefundPage() {
                   4
                 </span>
                 <p>
-                  Le remboursement est effectué après vérification du retour par
-                  la boutique.
+                  En cas de silence ou de refus infondé de la boutique
+                  partenaire, le client avertit l'administration d'IvoireStore
+                  via{" "}
+                  <a
+                    href="mailto:contact@ivoirestore.com"
+                    className="text-orange-400 hover:underline"
+                  >
+                    contact@ivoirestore.com
+                  </a>
+                  . La plateforme se réserve le droit de bloquer le vendeur
+                  fautif.
                 </p>
               </div>
             </div>
           </section>
 
           <section>
-            <h2 className="text-white font-bold text-lg mb-3">
-              4. Produits éligibles
+            <h2 className="text-[var(--text-primary)] font-bold text-lg mb-3">
+              4. Limites d'intervention d'IvoireStore
             </h2>
             <p className="mb-3">
-              Sont éligibles au remboursement les produits retournés dans leur
-              état d'origine, avec leurs accessoires et emballage. Ne sont{" "}
-              <strong className="text-white">pas éligibles</strong> :
+              IvoireStore agissant comme intermédiaire, les fonds issus des
+              commandes validées transitent historiquement de la main du client
+              à la main du vendeur de façon directe (COD). De ce fait, le
+              remboursement d'un article{" "}
+              <strong className="text-[var(--text-primary)] font-semibold">
+                incombe juridiquement et financièrement au vendeur d'origine
+              </strong>
+              . IvoireStore veille toutefois à sanctionner (jusqu'à la
+              radiation) les vendeurs ayant de mauvaises pratiques.
             </p>
-            <ul className="list-disc list-inside space-y-1 text-slate-400 ml-4">
-              <li>Les produits endommagés par le client après réception</li>
-              <li>Les produits utilisés ou dont l'emballage a été jeté</li>
-              <li>Les produits périssables ou sur-mesure</li>
-              <li>
-                Les commandes annulées après expédition et refusées à la
-                livraison sans motif valable
-              </li>
-            </ul>
           </section>
         </div>
       </motion.div>

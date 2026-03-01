@@ -8,29 +8,39 @@ import {
   HiCurrencyDollar,
   HiArrowUp,
   HiPlus,
+  HiPaperAirplane,
 } from "react-icons/hi";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
 import AdminLayout from "../../layouts/AdminLayout";
 import {
   getAdminStats,
   getOrders,
-  updateOrderStatus,
+  transmitOrder,
+  markCommissionPaid,
+  getCommissionStats,
 } from "../../services/api";
 import OrderDetailModal from "../../components/OrderDetailModal";
 import toast from "react-hot-toast";
-
-const STATUS_OPTIONS = [
-  { value: "pending", label: "En attente" },
-  { value: "transmitted", label: "Transmise" },
-  { value: "delivered", label: "Livrée" },
-  { value: "commission_paid", label: "Commission payée" },
-];
 
 const STATUS_COLORS = {
   pending: "#f59e0b",
   transmitted: "#3b82f6",
   delivered: "#10b981",
   commission_paid: "#a855f7",
+};
+
+const STATUS_LABELS = {
+  pending: "En attente",
+  transmitted: "Transmise",
+  delivered: "Livrée",
+  commission_paid: "Commission payée",
+};
+
+const STATUS_BADGE = {
+  pending: "bg-amber-500/15 text-amber-400",
+  transmitted: "bg-blue-500/15 text-blue-400",
+  delivered: "bg-emerald-500/15 text-emerald-400",
+  commission_paid: "bg-purple-500/15 text-purple-400",
 };
 
 function AnimatedNumber({ value, suffix = "" }) {
@@ -113,8 +123,10 @@ export default function AdminDashboardPage() {
   const [statsLoading, setSL] = useState(true);
   const [orders, setOrders] = useState([]);
   const [ordersLoading, setOL] = useState(true);
+  const [commissionData, setCommissionData] = useState(null);
+  const [commissionLoading, setCL] = useState(true);
   const [selectedOrder, setSelectedOrder] = useState(null);
-  const [updating, setUpdating] = useState(null);
+  const [acting, setActing] = useState(null);
 
   useEffect(() => {
     getAdminStats()
@@ -128,31 +140,44 @@ export default function AdminDashboardPage() {
       )
       .catch(() => {})
       .finally(() => setOL(false));
+
+    getCommissionStats()
+      .then((d) => setCommissionData(d))
+      .catch(() => {})
+      .finally(() => setCL(false));
   }, []);
 
-  const handleStatusChange = async (orderId, newStatus) => {
-    setUpdating(orderId);
+  const handleTransmit = async (orderId) => {
+    setActing(orderId);
     try {
-      await updateOrderStatus(orderId, newStatus);
-      if (newStatus === "commission_paid") {
-        // Remove finalized orders from dashboard
-        setOrders((prev) => prev.filter((o) => o._id !== orderId));
-      } else {
-        setOrders((prev) =>
-          prev.map((o) =>
-            o._id === orderId ? { ...o, status: newStatus } : o,
-          ),
-        );
-      }
-      toast.success("Statut mis à jour !");
+      await transmitOrder(orderId);
+      setOrders((prev) =>
+        prev.map((o) =>
+          o._id === orderId ? { ...o, status: "transmitted" } : o,
+        ),
+      );
+      toast.success("Commande transmise !");
     } catch (err) {
       toast.error(err.message);
     } finally {
-      setUpdating(null);
+      setActing(null);
     }
   };
 
-  // Build pie chart data from stats
+  const handleCommissionPaid = async (orderId) => {
+    setActing(orderId);
+    try {
+      await markCommissionPaid(orderId);
+      setOrders((prev) => prev.filter((o) => o._id !== orderId));
+      toast.success("Commission payée !");
+    } catch (err) {
+      toast.error(err.message);
+    } finally {
+      setActing(null);
+    }
+  };
+
+  // Build pie chart data
   const pieData = stats?.commandes
     ? [
         {
@@ -189,7 +214,7 @@ export default function AdminDashboardPage() {
     {
       icon: HiCurrencyDollar,
       label: "Commissions",
-      value: stats?.revenuCommission,
+      value: commissionData?.totals?.totalPaid || 0,
       color: "bg-orange-400/15 text-orange-400",
       suffix: " FCFA",
     },
@@ -237,7 +262,7 @@ export default function AdminDashboardPage() {
           )}
         </div>
 
-        {/* Charts + quick in*/}
+        {/* Charts + Quick Summary */}
         {!statsLoading && pieData.length > 0 && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -336,6 +361,82 @@ export default function AdminDashboardPage() {
           </motion.div>
         )}
 
+        {/* Commission Summary by Boutique */}
+        {!commissionLoading && commissionData && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5 }}
+            className="glass-card p-6"
+          >
+            <h3 className="text-[var(--text-primary)] font-bold text-sm mb-4">
+              💰 Commissions dues par boutique
+            </h3>
+
+            {/* Global totals */}
+            <div className="mb-6">
+              <div className="bg-[var(--bg-hover)] rounded-xl p-5 border border-amber-500/20 max-w-sm">
+                <p className="text-amber-500/80 text-xs font-semibold uppercase tracking-wider mb-2">
+                  Total des commissions dues
+                </p>
+                <p className="text-3xl font-black text-amber-400">
+                  {new Intl.NumberFormat("fr-FR").format(
+                    commissionData.totals?.totalDue || 0,
+                  )}{" "}
+                  FCFA
+                </p>
+              </div>
+            </div>
+
+            {/* Per-boutique breakdown */}
+            {commissionData.data &&
+            commissionData.data.filter((b) => b.commissionDue > 0).length >
+              0 ? (
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm table-premium">
+                  <thead>
+                    <tr>
+                      {["Boutique", "Commandes", "Commission due"].map((h) => (
+                        <th key={h}>{h}</th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {commissionData.data
+                      .filter((b) => b.commissionDue > 0)
+                      .map((b, i) => (
+                        <motion.tr
+                          key={b.boutique._id || i}
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          transition={{ delay: i * 0.04 }}
+                        >
+                          <td className="text-[var(--text-primary)] font-semibold">
+                            {b.boutique.name || "—"}
+                          </td>
+                          <td className="text-[var(--text-secondary)]">
+                            {b.deliveredOrders || 0}
+                          </td>
+                          <td className="text-amber-400 font-semibold whitespace-nowrap">
+                            {new Intl.NumberFormat("fr-FR").format(
+                              b.commissionDue || 0,
+                            )}{" "}
+                            FCFA
+                          </td>
+                        </motion.tr>
+                      ))}
+                  </tbody>
+                </table>
+              </div>
+            ) : (
+              <div className="text-center py-6 text-slate-500 text-sm bg-[var(--bg-hover)] rounded-xl border border-[var(--border-color)]">
+                Toutes les commissions ont été réglées ou il n'y a aucune
+                commission en attente.
+              </div>
+            )}
+          </motion.div>
+        )}
+
         {/* Recent orders */}
         <div>
           <div className="flex items-center justify-between mb-5">
@@ -362,6 +463,7 @@ export default function AdminDashboardPage() {
                       "Montant",
                       "Statut",
                       "Date",
+                      "Action",
                     ].map((h) => (
                       <th key={h}>{h}</th>
                     ))}
@@ -371,7 +473,7 @@ export default function AdminDashboardPage() {
                   {ordersLoading ? (
                     [...Array(5)].map((_, i) => (
                       <tr key={i}>
-                        {[...Array(6)].map((_, j) => (
+                        {[...Array(7)].map((_, j) => (
                           <td key={j} className="px-4 py-3 first:pl-5">
                             <div className="h-4 skeleton rounded-full" />
                           </td>
@@ -381,7 +483,7 @@ export default function AdminDashboardPage() {
                   ) : orders.length === 0 ? (
                     <tr>
                       <td
-                        colSpan={6}
+                        colSpan={7}
                         className="text-center py-10 text-slate-500"
                       >
                         Aucune commande
@@ -395,6 +497,7 @@ export default function AdminDashboardPage() {
                         animate={{ opacity: 1 }}
                         transition={{ delay: i * 0.04 }}
                         onClick={() => setSelectedOrder(order)}
+                        className="cursor-pointer"
                       >
                         <td className="text-[var(--text-primary)] font-medium">
                           {order.customerName}
@@ -410,44 +513,66 @@ export default function AdminDashboardPage() {
                             ? new Intl.NumberFormat("fr-FR").format(
                                 order.totalPrice,
                               ) + " FCFA"
-                            : order.product?.price != null
-                              ? new Intl.NumberFormat("fr-FR").format(
-                                  order.product.price * order.quantity,
-                                ) + " FCFA"
-                              : "—"}
+                            : "—"}
                         </td>
-                        <td onClick={(e) => e.stopPropagation()}>
-                          {updating === order._id ? (
-                            <div className="w-5 h-5 border-2 border-orange-500 border-t-transparent rounded-full animate-spin" />
-                          ) : (
-                            <div className="flex items-center gap-2">
-                              <span
-                                className={`status-dot status-dot-${order.status}`}
-                              />
-                              <select
-                                value={order.status}
-                                onChange={(e) =>
-                                  handleStatusChange(order._id, e.target.value)
-                                }
-                                className="bg-transparent border border-[var(--border-color)] rounded-lg px-2 py-1 text-xs text-[var(--text-primary)] cursor-pointer hover:border-orange-500/50 transition-colors focus:outline-none focus:ring-1 focus:ring-orange-500"
-                              >
-                                {STATUS_OPTIONS.map((s) => (
-                                  <option
-                                    key={s.value}
-                                    value={s.value}
-                                    className="bg-[var(--bg-input)]"
-                                  >
-                                    {s.label}
-                                  </option>
-                                ))}
-                              </select>
-                            </div>
-                          )}
+                        <td>
+                          <span
+                            className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium ${
+                              STATUS_BADGE[order.status] || STATUS_BADGE.pending
+                            }`}
+                          >
+                            <span
+                              className={`w-1.5 h-1.5 rounded-full ${
+                                order.status === "pending"
+                                  ? "bg-amber-400"
+                                  : order.status === "transmitted"
+                                    ? "bg-blue-400"
+                                    : order.status === "delivered"
+                                      ? "bg-emerald-400"
+                                      : "bg-purple-400"
+                              }`}
+                            />
+                            {STATUS_LABELS[order.status] || order.status}
+                          </span>
                         </td>
                         <td className="text-slate-500 text-xs whitespace-nowrap">
                           {new Date(order.createdAt).toLocaleDateString(
                             "fr-FR",
                           )}
+                        </td>
+                        <td onClick={(e) => e.stopPropagation()}>
+                          <div className="flex items-center gap-1.5">
+                            {order.status === "pending" && (
+                              <button
+                                onClick={() => handleTransmit(order._id)}
+                                disabled={acting === order._id}
+                                className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-medium bg-blue-500/15 text-blue-400 hover:bg-blue-500/25 transition-colors disabled:opacity-50"
+                                title="Transmettre"
+                              >
+                                {acting === order._id ? (
+                                  <div className="w-3 h-3 border-2 border-blue-400 border-t-transparent rounded-full animate-spin" />
+                                ) : (
+                                  <HiPaperAirplane className="w-3.5 h-3.5" />
+                                )}
+                                Transmettre
+                              </button>
+                            )}
+                            {order.status === "delivered" && (
+                              <button
+                                onClick={() => handleCommissionPaid(order._id)}
+                                disabled={acting === order._id}
+                                className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-medium bg-purple-500/15 text-purple-400 hover:bg-purple-500/25 transition-colors disabled:opacity-50"
+                                title="Commission payée"
+                              >
+                                {acting === order._id ? (
+                                  <div className="w-3 h-3 border-2 border-purple-400 border-t-transparent rounded-full animate-spin" />
+                                ) : (
+                                  <HiCurrencyDollar className="w-3.5 h-3.5" />
+                                )}
+                                Payée
+                              </button>
+                            )}
+                          </div>
                         </td>
                       </motion.tr>
                     ))
@@ -462,7 +587,7 @@ export default function AdminDashboardPage() {
         order={selectedOrder}
         isOpen={!!selectedOrder}
         onClose={() => setSelectedOrder(null)}
-        onStatusUpdate={handleStatusChange}
+        onStatusUpdate={() => {}}
       />
     </AdminLayout>
   );

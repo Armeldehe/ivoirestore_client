@@ -103,19 +103,19 @@ export default function HeroSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: STAGGER * 4 }}
-              className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
+              className="flex flex-col sm:flex-row flex-wrap gap-4 justify-center lg:justify-start"
             >
               <Link
                 to="/products"
-                className="btn-primary text-base px-8 py-4 glow-orange group"
+                className="btn-primary text-base px-8 py-4 glow-orange group flex-1 sm:flex-none justify-center whitespace-nowrap"
               >
-                <HiShoppingBag className="w-5 h-5" />
+                <HiShoppingBag className="w-5 h-5 flex-shrink-0" />
                 Commander maintenant
-                <HiArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+                <HiArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1 flex-shrink-0" />
               </Link>
               <a
                 href="#boutiques"
-                className="btn-secondary text-base px-8 py-4"
+                className="btn-secondary text-base px-8 py-4 flex-1 sm:flex-none justify-center whitespace-nowrap"
               >
                 Nos boutiques
               </a>

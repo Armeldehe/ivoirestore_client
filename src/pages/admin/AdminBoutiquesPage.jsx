@@ -1,11 +1,25 @@
 import { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { HiShieldCheck, HiPlus, HiSearch, HiTrash } from "react-icons/hi";
+import {
+  HiShieldCheck,
+  HiPlus,
+  HiSearch,
+  HiTrash,
+  HiPencil,
+  HiUserAdd,
+  HiCurrencyDollar,
+} from "react-icons/hi";
 import AdminLayout from "../../layouts/AdminLayout";
-import { getBoutiques, deleteBoutique } from "../../services/api";
+import {
+  getBoutiques,
+  deleteBoutique,
+  updateBoutiqueCommission,
+  createVendeurAccount,
+} from "../../services/api";
 import toast from "react-hot-toast";
 
+/* ─── Confirm Modal ──────────────────────────────────────────────────────── */
 function ConfirmModal({ isOpen, onClose, onConfirm, title, message, loading }) {
   if (!isOpen) return null;
   return (
@@ -46,6 +60,224 @@ function ConfirmModal({ isOpen, onClose, onConfirm, title, message, loading }) {
   );
 }
 
+/* ─── Commission Edit Modal ──────────────────────────────────────────────── */
+function CommissionModal({ isOpen, boutique, onClose, onSave }) {
+  const [rate, setRate] = useState(boutique?.commissionRate || 10);
+  const [saving, setSaving] = useState(false);
+
+  useEffect(() => {
+    if (boutique) setRate(boutique.commissionRate || 10);
+  }, [boutique]);
+
+  if (!isOpen || !boutique) return null;
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setSaving(true);
+    try {
+      await updateBoutiqueCommission(boutique._id, Number(rate));
+      onSave(boutique._id, Number(rate));
+      toast.success(`Commission mise à jour : ${rate}%`);
+      onClose();
+    } catch (err) {
+      toast.error(err.message);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  return (
+    <AnimatePresence>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+        onClick={onClose}
+      >
+        <motion.div
+          initial={{ scale: 0.9, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          exit={{ scale: 0.9, opacity: 0 }}
+          className="glass-card p-6 max-w-sm w-full"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <h3 className="text-[var(--text-primary)] font-bold text-lg mb-2 flex items-center gap-2">
+            <HiCurrencyDollar className="w-5 h-5 text-orange-400" />
+            Commission — {boutique.name}
+          </h3>
+          <form onSubmit={handleSubmit} className="space-y-4 mt-4">
+            <div>
+              <label
+                className="block text-sm font-medium mb-2"
+                style={{ color: "var(--text-secondary)" }}
+              >
+                Taux de commission (%)
+              </label>
+              <input
+                type="number"
+                value={rate}
+                onChange={(e) => setRate(e.target.value)}
+                min="0"
+                max="100"
+                step="0.5"
+                className="input-field"
+                required
+              />
+            </div>
+            <div className="flex gap-3 justify-end">
+              <button
+                type="button"
+                onClick={onClose}
+                className="btn-ghost text-sm"
+              >
+                Annuler
+              </button>
+              <button
+                type="submit"
+                disabled={saving}
+                className="btn-primary text-sm"
+              >
+                {saving ? "Enregistrement..." : "Enregistrer"}
+              </button>
+            </div>
+          </form>
+        </motion.div>
+      </motion.div>
+    </AnimatePresence>
+  );
+}
+
+/* ─── Vendeur Creation Modal ─────────────────────────────────────────────── */
+function VendeurModal({ isOpen, boutique, onClose }) {
+  const [form, setForm] = useState({ email: "", password: "" });
+  const [saving, setSaving] = useState(false);
+
+  if (!isOpen || !boutique) return null;
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!form.email || !form.password) {
+      toast.error("Remplissez tous les champs.");
+      return;
+    }
+    if (form.password.length < 6) {
+      toast.error("Le mot de passe doit contenir au moins 6 caractères.");
+      return;
+    }
+    setSaving(true);
+    try {
+      await createVendeurAccount({
+        email: form.email,
+        password: form.password,
+        boutique: boutique._id,
+      });
+      toast.success(
+        `Compte vendeur créé pour ${boutique.name} !\nEmail: ${form.email}`,
+      );
+      setForm({ email: "", password: "" });
+      onClose();
+    } catch (err) {
+      toast.error(err.message);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  return (
+    <AnimatePresence>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+        onClick={onClose}
+      >
+        <motion.div
+          initial={{ scale: 0.9, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          exit={{ scale: 0.9, opacity: 0 }}
+          className="glass-card p-6 max-w-md w-full"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <h3 className="text-[var(--text-primary)] font-bold text-lg mb-2 flex items-center gap-2">
+            <HiUserAdd className="w-5 h-5 text-emerald-400" />
+            Créer un compte vendeur
+          </h3>
+          <p
+            className="text-sm mb-4"
+            style={{ color: "var(--text-secondary)" }}
+          >
+            Créez un accès vendeur pour <strong>{boutique.name}</strong>. Le
+            vendeur pourra se connecter sur <code>/vendeur/login</code> pour
+            gérer ses produits.
+          </p>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <label
+                className="block text-sm font-medium mb-2"
+                style={{ color: "var(--text-secondary)" }}
+              >
+                Email du vendeur
+              </label>
+              <input
+                type="email"
+                value={form.email}
+                onChange={(e) =>
+                  setForm((f) => ({ ...f, email: e.target.value }))
+                }
+                placeholder="vendeur@boutique.ci"
+                className="input-field"
+                required
+              />
+            </div>
+            <div>
+              <label
+                className="block text-sm font-medium mb-2"
+                style={{ color: "var(--text-secondary)" }}
+              >
+                Mot de passe
+              </label>
+              <input
+                type="password"
+                value={form.password}
+                onChange={(e) =>
+                  setForm((f) => ({ ...f, password: e.target.value }))
+                }
+                placeholder="Minimum 6 caractères"
+                className="input-field"
+                required
+                minLength={6}
+              />
+            </div>
+            <div className="flex gap-3 justify-end">
+              <button
+                type="button"
+                onClick={onClose}
+                className="btn-ghost text-sm"
+              >
+                Annuler
+              </button>
+              <button
+                type="submit"
+                disabled={saving}
+                className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold text-white transition-all"
+                style={{
+                  background: "linear-gradient(135deg, #10b981, #059669)",
+                  opacity: saving ? 0.7 : 1,
+                }}
+              >
+                {saving ? "Création..." : "Créer le compte"}
+              </button>
+            </div>
+          </form>
+        </motion.div>
+      </motion.div>
+    </AnimatePresence>
+  );
+}
+
+/* ─── Main Page ──────────────────────────────────────────────────────────── */
 export default function AdminBoutiquesPage() {
   const [boutiques, setBoutiques] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -54,6 +286,8 @@ export default function AdminBoutiquesPage() {
   const [totalPages, setTP] = useState(1);
   const [deleting, setDeleting] = useState(null);
   const [deleteTarget, setDeleteTarget] = useState(null);
+  const [commissionTarget, setCommissionTarget] = useState(null);
+  const [vendeurTarget, setVendeurTarget] = useState(null);
 
   const fetchBoutiques = useCallback(async () => {
     setLoading(true);
@@ -89,6 +323,14 @@ export default function AdminBoutiquesPage() {
       setDeleting(null);
       setDeleteTarget(null);
     }
+  };
+
+  const handleCommissionSave = (boutiqueId, newRate) => {
+    setBoutiques((prev) =>
+      prev.map((b) =>
+        b._id === boutiqueId ? { ...b, commissionRate: newRate } : b,
+      ),
+    );
   };
 
   return (
@@ -135,7 +377,7 @@ export default function AdminBoutiquesPage() {
                     "Commission",
                     "Vérifié",
                     "Date",
-                    "",
+                    "Actions",
                   ].map((h) => (
                     <th key={h}>{h}</th>
                   ))}
@@ -203,13 +445,32 @@ export default function AdminBoutiquesPage() {
                         {new Date(b.createdAt).toLocaleDateString("fr-FR")}
                       </td>
                       <td>
-                        <button
-                          onClick={() => setDeleteTarget(b)}
-                          className="p-2 bg-[var(--bg-hover)] hover:bg-red-500/10 rounded-lg text-[var(--text-secondary)] hover:text-red-400 transition-all"
-                          title="Supprimer"
-                        >
-                          <HiTrash className="w-3.5 h-3.5" />
-                        </button>
+                        <div className="flex items-center gap-1.5">
+                          {/* Edit commission */}
+                          <button
+                            onClick={() => setCommissionTarget(b)}
+                            className="p-2 bg-[var(--bg-hover)] hover:bg-orange-500/10 rounded-lg text-[var(--text-secondary)] hover:text-orange-400 transition-all"
+                            title="Modifier commission"
+                          >
+                            <HiPencil className="w-3.5 h-3.5" />
+                          </button>
+                          {/* Create vendeur */}
+                          <button
+                            onClick={() => setVendeurTarget(b)}
+                            className="p-2 bg-[var(--bg-hover)] hover:bg-emerald-500/10 rounded-lg text-[var(--text-secondary)] hover:text-emerald-400 transition-all"
+                            title="Créer compte vendeur"
+                          >
+                            <HiUserAdd className="w-3.5 h-3.5" />
+                          </button>
+                          {/* Delete */}
+                          <button
+                            onClick={() => setDeleteTarget(b)}
+                            className="p-2 bg-[var(--bg-hover)] hover:bg-red-500/10 rounded-lg text-[var(--text-secondary)] hover:text-red-400 transition-all"
+                            title="Supprimer"
+                          >
+                            <HiTrash className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
                       </td>
                     </motion.tr>
                   ))
@@ -241,6 +502,7 @@ export default function AdminBoutiquesPage() {
         </div>
       </div>
 
+      {/* Modals */}
       <ConfirmModal
         isOpen={!!deleteTarget}
         onClose={() => setDeleteTarget(null)}
@@ -248,6 +510,19 @@ export default function AdminBoutiquesPage() {
         title="Supprimer la boutique"
         message={`Êtes-vous sûr de vouloir supprimer « ${deleteTarget?.name} » ? Tous les produits associés pourraient être affectés.`}
         loading={!!deleting}
+      />
+
+      <CommissionModal
+        isOpen={!!commissionTarget}
+        boutique={commissionTarget}
+        onClose={() => setCommissionTarget(null)}
+        onSave={handleCommissionSave}
+      />
+
+      <VendeurModal
+        isOpen={!!vendeurTarget}
+        boutique={vendeurTarget}
+        onClose={() => setVendeurTarget(null)}
       />
     </AdminLayout>
   );

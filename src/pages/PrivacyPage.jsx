@@ -20,101 +20,118 @@ export default function PrivacyPage() {
           Dernière mise à jour : Février 2026
         </p>
 
-        <div className="space-y-8 text-slate-300 text-sm leading-relaxed">
+        <div className="space-y-8 text-[var(--text-secondary)] text-sm leading-relaxed">
           <section>
-            <h2 className="text-white font-bold text-lg mb-3">
-              1. Données collectées
+            <h2 className="text-[var(--text-primary)] font-bold text-lg mb-3">
+              1. Données collectées (Clients)
             </h2>
             <p className="mb-3">
-              Dans le cadre de l'utilisation de notre plateforme, nous
-              collectons les données suivantes :
+              Dans le cadre de l'utilisation de notre plateforme par les
+              acheteurs, nous collectons les données suivantes :
             </p>
-            <ul className="list-disc list-inside space-y-1 text-slate-400 ml-4">
+            <ul className="list-disc list-inside space-y-1 ml-4">
               <li>
-                <strong className="text-slate-300">Nom complet</strong> — pour
-                identifier la commande
-              </li>
-              <li>
-                <strong className="text-slate-300">Numéro de téléphone</strong>{" "}
-                — pour la coordination de livraison
-              </li>
-              <li>
-                <strong className="text-slate-300">Adresse de livraison</strong>{" "}
-                — pour acheminer votre commande
-              </li>
-              <li>
-                <strong className="text-slate-300">
-                  Historique de commandes
+                <strong className="text-[var(--text-primary)]">
+                  Nom complet
                 </strong>{" "}
-                — pour le suivi et le support client
+                — pour identifier la commande
               </li>
               <li>
-                <strong className="text-slate-300">Adresse email</strong> — si
-                fournie, pour les notifications de commande
+                <strong className="text-[var(--text-primary)]">
+                  Numéro de téléphone
+                </strong>{" "}
+                — pour la coordination de la livraison
+              </li>
+              <li>
+                <strong className="text-[var(--text-primary)]">
+                  Adresse de livraison
+                </strong>{" "}
+                — pour acheminer la commande à destination
               </li>
             </ul>
           </section>
 
           <section>
-            <h2 className="text-white font-bold text-lg mb-3">
-              2. Utilisation des données
+            <h2 className="text-[var(--text-primary)] font-bold text-lg mb-3">
+              2. Données collectées (Vendeurs)
+            </h2>
+            <p className="mb-3">
+              Pour les boutiques partenaires enregistrées sur IvoireStore, les
+              informations suivantes sont conservées :
+            </p>
+            <ul className="list-disc list-inside space-y-1 ml-4">
+              <li>
+                <strong className="text-[var(--text-primary)]">
+                  Informations d'identité
+                </strong>{" "}
+                — nom de la boutique, adresse physique, téléphone
+              </li>
+              <li>
+                <strong className="text-[var(--text-primary)]">
+                  Identifiants de connexion
+                </strong>{" "}
+                — adresse email professionnelle (chiffrée) et mot de passe
+                (haché)
+              </li>
+              <li>
+                <strong className="text-[var(--text-primary)]">
+                  Données commerciales
+                </strong>{" "}
+                — historique des ventes, catalogue produits, statistiques de
+                commissions
+              </li>
+            </ul>
+          </section>
+
+          <section>
+            <h2 className="text-[var(--text-primary)] font-bold text-lg mb-3">
+              3. Utilisation des données
             </h2>
             <p>
-              Vos données sont utilisées exclusivement pour le traitement et le
-              suivi de vos commandes, la communication relative à vos achats,
-              l'amélioration de nos services et de l'expérience utilisateur, et
-              le respect de nos obligations légales. Nous ne vendons, ne louons
-              et ne partageons jamais vos données personnelles avec des tiers à
-              des fins commerciales.
+              Vos données sont utilisées exclusivement pour le traitement de vos
+              commandes via les boutiques partenaires, le fonctionnement de
+              l'Espace Vendeur, le calcul analytique des ventes, et le respect
+              de nos obligations légales (traitement des commissions). Nous ne
+              vendons jamais vos données personnelles avec des tiers à des fins
+              commerciales publicitaires.
             </p>
           </section>
 
           <section>
-            <h2 className="text-white font-bold text-lg mb-3">
-              3. Protection des données
+            <h2 className="text-[var(--text-primary)] font-bold text-lg mb-3">
+              4. Sécurité
             </h2>
             <p>
-              IvoireStore met en œuvre des mesures de sécurité techniques et
-              organisationnelles pour protéger vos données contre tout accès non
-              autorisé, modification, divulgation ou destruction. Les
-              communications entre votre navigateur et nos serveurs sont
-              chiffrées via le protocole HTTPS. L'accès aux données est
-              strictement limité au personnel autorisé.
+              IvoireStore chiffre les mots de passe et met en œuvre des mesures
+              de sécurité pour protéger les connexions et la base de données.
+              Toutefois, chaque vendeur reste garant de la sécurité de ses
+              propres accès.
             </p>
           </section>
 
           <section>
-            <h2 className="text-white font-bold text-lg mb-3">4. Cookies</h2>
-            <p>
-              Notre site utilise des cookies essentiels au bon fonctionnement de
-              la plateforme (authentification, panier d'achat, préférences).
-              Aucun cookie publicitaire ou de pistage tiers n'est utilisé. En
-              continuant à naviguer sur IvoireStore, vous consentez à
-              l'utilisation de ces cookies fonctionnels.
-            </p>
-          </section>
-
-          <section>
-            <h2 className="text-white font-bold text-lg mb-3">
+            <h2 className="text-[var(--text-primary)] font-bold text-lg mb-3">
               5. Durée de conservation
             </h2>
             <p>
               Les données de commande sont conservées pendant une durée de 3 ans
               à compter de la dernière commande, conformément aux obligations
-              légales en vigueur en Côte d'Ivoire. Au-delà de cette période, les
-              données sont anonymisées ou supprimées.
+              légales en vigueur en Côte d'Ivoire. Les comptes boutiques sont
+              conservés tant que le partenariat est actif.
             </p>
           </section>
 
           <section>
-            <h2 className="text-white font-bold text-lg mb-3">6. Vos droits</h2>
+            <h2 className="text-[var(--text-primary)] font-bold text-lg mb-3">
+              6. Vos droits
+            </h2>
             <p>
               Vous disposez d'un droit d'accès, de rectification et de
               suppression de vos données personnelles. Pour exercer ces droits,
               contactez-nous à{" "}
               <a
                 href="mailto:contact@ivoirestore.com"
-                className="text-orange-400 hover:text-orange-300"
+                className="text-orange-400 hover:text-orange-300 transition-colors"
               >
                 contact@ivoirestore.com
               </a>

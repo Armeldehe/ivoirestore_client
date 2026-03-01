@@ -17,40 +17,46 @@ export default function LegalPage() {
       >
         <h1 className="section-title mb-8">Mentions Légales</h1>
 
-        <div className="space-y-8 text-slate-300 text-sm leading-relaxed">
-          <section className="glass-card p-6">
-            <h2 className="text-white font-bold text-lg mb-4">
-              Éditeur du site
+        <div className="space-y-8 text-[var(--text-secondary)] text-sm leading-relaxed">
+          <section className="bg-[var(--bg-hover)] border border-[var(--border-color)] rounded-2xl p-6">
+            <h2 className="text-[var(--text-primary)] font-bold text-lg mb-4">
+              Éditeur de la plateforme
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
               <div>
-                <span className="text-slate-500">Nom :</span>{" "}
-                <strong className="text-white">IvoireStore</strong>
+                <span className="text-[var(--text-secondary)]">Nom :</span>{" "}
+                <strong className="text-[var(--text-primary)]">
+                  IvoireStore
+                </strong>
               </div>
               <div>
-                <span className="text-slate-500">Statut :</span> Plateforme
-                e-commerce
+                <span className="text-[var(--text-secondary)]">Statut :</span>{" "}
+                Plateforme e-commerce multi-vendeurs
               </div>
               <div>
-                <span className="text-slate-500">Pays :</span> Côte d'Ivoire
+                <span className="text-[var(--text-secondary)]">Pays :</span>{" "}
+                Côte d'Ivoire
               </div>
               <div>
-                <span className="text-slate-500">Ville :</span> Abidjan
+                <span className="text-[var(--text-secondary)]">Ville :</span>{" "}
+                Abidjan
               </div>
               <div>
-                <span className="text-slate-500">Téléphone :</span>{" "}
+                <span className="text-[var(--text-secondary)]">
+                  Téléphone :
+                </span>{" "}
                 <a
                   href="tel:+2250702838206"
-                  className="text-orange-400 hover:text-orange-300"
+                  className="text-orange-400 hover:text-orange-300 transition-colors"
                 >
                   +225 07 02 83 82 06
                 </a>
               </div>
               <div>
-                <span className="text-slate-500">Email :</span>{" "}
+                <span className="text-[var(--text-secondary)]">Email :</span>{" "}
                 <a
                   href="mailto:contact@ivoirestore.com"
-                  className="text-orange-400 hover:text-orange-300"
+                  className="text-orange-400 hover:text-orange-300 transition-colors"
                 >
                   contact@ivoirestore.com
                 </a>
@@ -59,50 +65,58 @@ export default function LegalPage() {
           </section>
 
           <section>
-            <h2 className="text-white font-bold text-lg mb-3">Activité</h2>
+            <h2 className="text-[var(--text-primary)] font-bold text-lg mb-3">
+              Activité
+            </h2>
             <p>
-              IvoireStore est une plateforme de mise en relation entre des
-              boutiques partenaires vérifiées et des consommateurs en Côte
-              d'Ivoire. La plateforme permet la consultation de catalogues
-              produits, la passation de commandes et la coordination de la
-              livraison avec paiement à la réception.
+              IvoireStore est une plateforme technologique de mise en relation
+              (marketplace) entre des boutiques partenaires vérifiées et des
+              consommateurs en Côte d'Ivoire. La plateforme fournit des services
+              d'hébergement de catalogues, de passation de commandes, et de
+              calcul analytique pour les vendeurs, le tout avec un système de
+              commissionnement sur les ventes confirmées.
             </p>
           </section>
 
           <section>
-            <h2 className="text-white font-bold text-lg mb-3">Hébergement</h2>
+            <h2 className="text-[var(--text-primary)] font-bold text-lg mb-3">
+              Hébergement
+            </h2>
             <p>
-              Le site IvoireStore est hébergé sur des infrastructures cloud
-              sécurisées assurant la disponibilité, la performance et la
-              protection des données conformément aux standards internationaux
-              de sécurité.
+              L'infrastructure technique d'IvoireStore (front-end et back-end)
+              est hébergée sur des serveurs cloud internationaux (Vercel /
+              Render) assurant une très haute disponibilité, le chiffrement des
+              données de bout en bout et des sauvegardes redondantes de la base
+              de données (MongoDB Atlas).
             </p>
           </section>
 
           <section>
-            <h2 className="text-white font-bold text-lg mb-3">
+            <h2 className="text-[var(--text-primary)] font-bold text-lg mb-3">
               Propriété intellectuelle
             </h2>
             <p>
-              L'ensemble du contenu du site IvoireStore (textes, images, logos,
-              graphismes, icônes) est protégé par le droit de la propriété
-              intellectuelle. Toute reproduction, représentation ou exploitation
-              non autorisée est strictement interdite. Le logo et le nom «
-              IvoireStore » sont des marques déposées.
+              Le code source, le design, le logo et la marque "IvoireStore"
+              appartiennent exclusivement à ses concepteurs. Toutefois,{" "}
+              <strong className="text-[var(--text-primary)] font-semibold">
+                les textes, images de produits et logos de boutiques
+              </strong>{" "}
+              appartiennent à leurs propriétaires/boutiques respectifs sous leur
+              entière responsabilité légale.
             </p>
           </section>
 
           <section>
-            <h2 className="text-white font-bold text-lg mb-3">
+            <h2 className="text-[var(--text-primary)] font-bold text-lg mb-3">
               Responsabilité
             </h2>
             <p>
-              IvoireStore s'efforce d'assurer l'exactitude des informations
-              publiées sur la plateforme. Toutefois, la plateforme ne peut
-              garantir l'exactitude de toutes les informations fournies par les
-              boutiques partenaires. IvoireStore ne saurait être tenu
-              responsable des dommages directs ou indirects résultant de
-              l'utilisation du site.
+              En sa qualité stricte d'hébergeur de données au sens de la loi,
+              IvoireStore ne procède qu'à un contrôle a posteriori. Ainsi, la
+              plateforme ne peut être tenue pour responsable des contenus
+              frauduleux, trompeurs ou contrefaits uploadés par les boutiques
+              partenaires, et s'engage uniquement au retrait de ces contenus dès
+              notification probante.
             </p>
           </section>
         </div>

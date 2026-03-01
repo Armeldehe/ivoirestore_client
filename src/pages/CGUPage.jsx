@@ -22,9 +22,9 @@ export default function CGUPage() {
           Dernière mise à jour : Février 2026
         </p>
 
-        <div className="space-y-8 text-slate-300 text-sm leading-relaxed">
+        <div className="space-y-8 text-[var(--text-secondary)] text-sm leading-relaxed">
           <section>
-            <h2 className="text-white font-bold text-lg mb-3">
+            <h2 className="text-[var(--text-primary)] font-bold text-lg mb-3">
               1. Présentation de la plateforme
             </h2>
             <p>
@@ -37,88 +37,93 @@ export default function CGUPage() {
           </section>
 
           <section>
-            <h2 className="text-white font-bold text-lg mb-3">
-              2. Rôle de la plateforme
+            <h2 className="text-[var(--text-primary)] font-bold text-lg mb-3">
+              2. Rôle d'intermédiaire
             </h2>
             <p>
-              IvoireStore agit en qualité d'intermédiaire technique. La
-              plateforme n'est ni vendeur ni acheteur. Elle met à disposition un
+              IvoireStore agit exclusivement en qualité d'intermédiaire
+              technique et commercial. La plateforme n'est ni le vendeur ni
+              l'acheteur des produits physiques. Elle met à disposition un
               espace numérique sécurisé pour la publication d'offres
-              commerciales par les boutiques partenaires et la passation de
-              commandes par les clients. IvoireStore perçoit une commission sur
-              chaque vente réalisée via la plateforme.
+              commerciales par les boutiques partenaires (vendeurs) et la
+              passation de commandes par les clients.
             </p>
           </section>
 
           <section>
-            <h2 className="text-white font-bold text-lg mb-3">
-              3. Compte utilisateur
+            <h2 className="text-[var(--text-primary)] font-bold text-lg mb-3">
+              3. Espace Vendeur et Accès Boutique
+            </h2>
+            <p>
+              Les boutiques partenaires bénéficient d'un accès dédié (Espace
+              Vendeur). Les comptes vendeurs sont créés et validés par
+              l'administration d'IvoireStore. Le vendeur est seul responsable de
+              la confidentialité de ses identifiants de connexion. Depuis cet
+              espace, la boutique s'engage à maintenir son catalogue à jour, à
+              mettre à jour les statuts de ses commandes et à régler les
+              commissions dues à la plateforme de manière régulière.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-[var(--text-primary)] font-bold text-lg mb-3">
+              4. Commandes et Clients
             </h2>
             <p>
               La navigation et l'achat sur IvoireStore ne nécessitent pas la
               création d'un compte client. Les informations nécessaires à la
               commande (nom, téléphone, adresse de livraison) sont collectées
-              lors du processus de commande. Les comptes administrateurs sont
-              réservés à l'équipe IvoireStore pour la gestion de la plateforme.
+              lors du processus et transmises à la boutique partenaire pour
+              assurer la livraison. L'utilisateur client s'engage à fournir des
+              informations exactes.
             </p>
           </section>
 
           <section>
-            <h2 className="text-white font-bold text-lg mb-3">
-              4. Responsabilités de l'utilisateur
-            </h2>
-            <p>
-              L'utilisateur s'engage à fournir des informations exactes lors de
-              sa commande, à ne pas utiliser la plateforme à des fins
-              frauduleuses ou illicites, à respecter les droits de propriété
-              intellectuelle des contenus publiés et à ne pas perturber le
-              fonctionnement technique de la plateforme.
-            </p>
-          </section>
-
-          <section>
-            <h2 className="text-white font-bold text-lg mb-3">
+            <h2 className="text-[var(--text-primary)] font-bold text-lg mb-3">
               5. Responsabilités du vendeur
             </h2>
             <p>
-              Chaque boutique partenaire est responsable de l'exactitude des
-              informations produits (description, prix, disponibilité), de la
-              qualité et conformité des produits livrés, du respect des délais
-              de livraison annoncés et du traitement des réclamations liées à
-              ses produits.
+              Chaque boutique partenaire est{" "}
+              <strong className="text-[var(--text-primary)] font-semibold">
+                seule responsable
+              </strong>{" "}
+              de l'exactitude des informations produits (description, prix,
+              images), de la qualité et de la conformité des produits livrés, du
+              respect des délais de livraison annoncés et du traitement des
+              réclamations liées à ses ventes. Le vendeur garantit disposer des
+              droits sur les images uploadées.
             </p>
           </section>
 
           <section>
-            <h2 className="text-white font-bold text-lg mb-3">
-              6. Limitations de responsabilité
+            <h2 className="text-[var(--text-primary)] font-bold text-lg mb-3">
+              6. Limitations de responsabilité d'IvoireStore
             </h2>
             <p>
               IvoireStore ne saurait être tenu responsable des défauts, vices
               cachés ou non-conformités des produits vendus par les boutiques
-              partenaires, des retards ou incidents de livraison imputables aux
-              transporteurs, de l'indisponibilité temporaire de la plateforme
-              pour maintenance ou raison technique, ni des pertes indirectes
-              résultant de l'utilisation de la plateforme.
+              partenaires, des retards ou incidents de livraison, de
+              l'indisponibilité temporaire de la plateforme pour maintenance, ni
+              des litiges commerciaux entre un client et un vendeur.
             </p>
           </section>
 
           <section>
-            <h2 className="text-white font-bold text-lg mb-3">
+            <h2 className="text-[var(--text-primary)] font-bold text-lg mb-3">
               7. Suspension et résiliation
             </h2>
             <p>
               IvoireStore se réserve le droit de suspendre ou résilier l'accès à
-              la plateforme pour tout utilisateur ne respectant pas les
-              présentes CGU, sans préavis ni indemnité. Les boutiques
-              partenaires peuvent voir leur compte suspendu en cas de plaintes
-              récurrentes, de non-respect des standards de qualité ou de
-              pratiques commerciales déloyales.
+              la plateforme pour tout utilisateur ou vendeur ne respectant pas
+              les présentes CGU, sans préavis ni indemnité. Un compte boutique
+              peut être bloqué en cas de commissions impayées persistantes, de
+              plaintes clients récurrentes ou de frauduleuses.
             </p>
           </section>
 
           <section>
-            <h2 className="text-white font-bold text-lg mb-3">
+            <h2 className="text-[var(--text-primary)] font-bold text-lg mb-3">
               8. Droit applicable
             </h2>
             <p>
@@ -130,20 +135,22 @@ export default function CGUPage() {
           </section>
 
           <section>
-            <h2 className="text-white font-bold text-lg mb-3">9. Contact</h2>
+            <h2 className="text-[var(--text-primary)] font-bold text-lg mb-3">
+              9. Contact
+            </h2>
             <p>
               Pour toute question relative aux présentes conditions, vous pouvez
               nous contacter à{" "}
               <a
                 href="mailto:contact@ivoirestore.com"
-                className="text-orange-400 hover:text-orange-300"
+                className="text-orange-400 hover:text-orange-300 transition-colors"
               >
                 contact@ivoirestore.com
               </a>{" "}
               ou au{" "}
               <a
                 href="tel:+2250702838206"
-                className="text-orange-400 hover:text-orange-300"
+                className="text-orange-400 hover:text-orange-300 transition-colors"
               >
                 +225 07 02 83 82 06
               </a>

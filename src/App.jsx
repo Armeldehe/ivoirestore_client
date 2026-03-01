@@ -36,6 +36,28 @@ const AdminBoutiquesPage = lazy(
 const AddBoutiquePage = lazy(() => import("./pages/admin/AddBoutiquePage"));
 const AddProductPage = lazy(() => import("./pages/admin/AddProductPage"));
 
+// Vendeur pages
+import VendeurRoute from "./components/VendeurRoute";
+const VendeurLoginPage = lazy(() => import("./pages/vendeur/VendeurLoginPage"));
+const VendeurDashboardPage = lazy(
+  () => import("./pages/vendeur/VendeurDashboardPage"),
+);
+const VendeurProductsPage = lazy(
+  () => import("./pages/vendeur/VendeurProductsPage"),
+);
+const VendeurAddProductPage = lazy(
+  () => import("./pages/vendeur/VendeurAddProductPage"),
+);
+const VendeurEditProductPage = lazy(
+  () => import("./pages/vendeur/VendeurEditProductPage"),
+);
+const VendeurOrdersPage = lazy(
+  () => import("./pages/vendeur/VendeurOrdersPage"),
+);
+const VendeurSettingsPage = lazy(
+  () => import("./pages/vendeur/VendeurSettingsPage"),
+);
+
 export default function App() {
   const location = useLocation();
 
@@ -109,6 +131,57 @@ export default function App() {
                 <AdminRoute>
                   <AddBoutiquePage />
                 </AdminRoute>
+              }
+            />
+
+            {/* ── Vendeur ── */}
+            <Route path="/vendeur/login" element={<VendeurLoginPage />} />
+            <Route
+              path="/vendeur"
+              element={
+                <VendeurRoute>
+                  <VendeurDashboardPage />
+                </VendeurRoute>
+              }
+            />
+            <Route
+              path="/vendeur/products"
+              element={
+                <VendeurRoute>
+                  <VendeurProductsPage />
+                </VendeurRoute>
+              }
+            />
+            <Route
+              path="/vendeur/products/add"
+              element={
+                <VendeurRoute>
+                  <VendeurAddProductPage />
+                </VendeurRoute>
+              }
+            />
+            <Route
+              path="/vendeur/products/edit/:id"
+              element={
+                <VendeurRoute>
+                  <VendeurEditProductPage />
+                </VendeurRoute>
+              }
+            />
+            <Route
+              path="/vendeur/orders"
+              element={
+                <VendeurRoute>
+                  <VendeurOrdersPage />
+                </VendeurRoute>
+              }
+            />
+            <Route
+              path="/vendeur/settings"
+              element={
+                <VendeurRoute>
+                  <VendeurSettingsPage />
+                </VendeurRoute>
               }
             />
 

@@ -6,6 +6,7 @@ import "./index.css";
 import App from "./App.jsx";
 import { CartProvider } from "./context/CartContext.jsx";
 import { AuthProvider } from "./context/AuthContext.jsx";
+import { VendeurAuthProvider } from "./context/VendeurAuthContext.jsx";
 import { ThemeProvider } from "./context/ThemeContext.jsx";
 import ScrollToTop from "./components/ScrollToTop.jsx";
 import ThemedToaster from "./components/ThemedToaster.jsx";
@@ -16,10 +17,12 @@ createRoot(document.getElementById("root")).render(
       <BrowserRouter>
         <ScrollToTop />
         <AuthProvider>
-          <CartProvider>
-            <App />
-            <ThemedToaster />
-          </CartProvider>
+          <VendeurAuthProvider>
+            <CartProvider>
+              <App />
+              <ThemedToaster />
+            </CartProvider>
+          </VendeurAuthProvider>
         </AuthProvider>
       </BrowserRouter>
     </ThemeProvider>
