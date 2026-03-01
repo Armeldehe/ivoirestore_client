@@ -18,6 +18,7 @@ const STATUS_OPTIONS = [
   { value: "transmitted", label: "Transmise" },
   { value: "delivered", label: "Livrée" },
   { value: "commission_paid", label: "Commission payée" },
+  { value: "cancelled", label: "Annulée" },
 ];
 
 function formatPrice(n) {
@@ -42,6 +43,9 @@ function StatusBadge({ status, isUpdating }) {
         Commission payée
       </span>
     ),
+    cancelled: (
+      <span className="badge bg-red-500/20 text-red-500">Annulée</span>
+    ),
   };
   return map[status] || <span className="badge">{status}</span>;
 }
@@ -51,6 +55,7 @@ export default function OrderDetailModal({
   isOpen,
   onClose,
   onStatusUpdate,
+  isAdmin = true,
 }) {
   const [updating, setUpdating] = useState(false);
   if (!order) return null;
@@ -118,15 +123,15 @@ export default function OrderDetailModal({
                     </p>
                     <select
                       value={order.status}
-                      disabled={updating}
+                      disabled={updating || !isAdmin}
                       onChange={(e) => handleStatusChange(e.target.value)}
-                      className="bg-[var(--bg-hover)] border border-[var(--border-color)] rounded-lg px-2 py-1 text-xs text-[var(--text-primary)] cursor-pointer hover:border-orange-500/50 transition-colors focus:outline-none focus:ring-1 focus:ring-orange-500 disabled:opacity-50"
+                      className={`bg-[var(--bg-hover)] border border-[var(--border-color)] rounded-lg px-2 py-1 text-xs text-[var(--text-primary)] transition-colors focus:outline-none focus:ring-1 focus:ring-orange-500 disabled:opacity-50 ${isAdmin ? "cursor-pointer hover:border-orange-500/50" : "cursor-not-allowed"}`}
                     >
                       {STATUS_OPTIONS.map((s) => (
                         <option
                           key={s.value}
                           value={s.value}
-                          className="bg-navy-900"
+                          className="bg-[var(--bg-primary)] text-[var(--text-primary)]"
                         >
                           {s.label}
                         </option>

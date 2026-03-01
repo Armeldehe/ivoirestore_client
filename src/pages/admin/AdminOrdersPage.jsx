@@ -36,6 +36,11 @@ const STATUS_OPTIONS = [
     label: "Commission payée",
     color: "bg-purple-500/15 text-purple-400",
   },
+  {
+    value: "cancelled",
+    label: "Annulée",
+    color: "bg-red-500/15 text-red-500",
+  },
 ];
 
 const getStatusStyle = (status) => {
@@ -248,7 +253,9 @@ export default function AdminOrdersPage() {
                                     ? "bg-blue-400"
                                     : order.status === "delivered"
                                       ? "bg-emerald-400"
-                                      : "bg-purple-400"
+                                      : order.status === "commission_paid"
+                                        ? "bg-purple-400"
+                                        : "bg-red-500"
                               }`}
                             />
                             {statusStyle.label}

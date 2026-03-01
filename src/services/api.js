@@ -266,6 +266,11 @@ export async function markOrderDelivered(id) {
   return res.data;
 }
 
+export async function cancelVendeurOrder(id) {
+  const res = await vendeurApi.put(`/vendeur/orders/${id}/cancel`);
+  return res.data;
+}
+
 export async function getVendeurCommissions() {
   const res = await vendeurApi.get("/vendeur/orders/commissions");
   return res.data;

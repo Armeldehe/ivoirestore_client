@@ -56,7 +56,7 @@ export default function Navbar() {
               <img
                 src="/logo_ivoirestore.png"
                 alt="IvoireStore"
-                className="h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+                className="h-16 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
               />
             </Link>
 

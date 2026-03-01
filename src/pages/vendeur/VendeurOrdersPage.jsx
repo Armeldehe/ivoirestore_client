@@ -1,14 +1,20 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { HiCheck, HiTruck } from "react-icons/hi";
+import { HiCheck, HiTruck, HiEye } from "react-icons/hi";
 import VendeurLayout from "../../layouts/VendeurLayout";
-import { getVendeurOrders, markOrderDelivered } from "../../services/api";
+import OrderDetailModal from "../../components/OrderDetailModal";
+import {
+  getVendeurOrders,
+  markOrderDelivered,
+  cancelVendeurOrder,
+} from "../../services/api";
 import toast from "react-hot-toast";
 
 const STATUS_LABELS = {
   transmitted: "Transmise",
   delivered: "Livrée",
   commission_paid: "Commission payée",
+  cancelled: "Annulée",
 };
 
 const STATUS_FILTER = [
@@ -16,6 +22,7 @@ const STATUS_FILTER = [
   { value: "transmitted", label: "Transmises" },
   { value: "delivered", label: "Livrées" },
   { value: "commission_paid", label: "Commission payée" },
+  { value: "cancelled", label: "Annulées" },
 ];
 
 export default function VendeurOrdersPage() {
@@ -25,6 +32,7 @@ export default function VendeurOrdersPage() {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [delivering, setDelivering] = useState(null);
+  const [selectedOrder, setSelectedOrder] = useState(null);
 
   const fetchOrders = async (p = 1, statusFilter = "") => {
     setLoading(true);
@@ -49,6 +57,29 @@ export default function VendeurOrdersPage() {
   const handleFilterChange = (value) => {
     setFilter(value);
     fetchOrders(1, value);
+  };
+
+  const handleCancelOrder = async (orderId) => {
+    if (
+      !window.confirm(
+        "Êtes-vous sûr de vouloir annuler cette commande ? Le stock sera restitué.",
+      )
+    )
+      return;
+    setDelivering(orderId);
+    try {
+      await cancelVendeurOrder(orderId);
+      setOrders((prev) =>
+        prev.map((o) =>
+          o._id === orderId ? { ...o, status: "cancelled" } : o,
+        ),
+      );
+      toast.success("Commande annulée avec succès !");
+    } catch (err) {
+      toast.error(err.message);
+    } finally {
+      setDelivering(null);
+    }
   };
 
   const handleMarkDelivered = async (orderId) => {
@@ -187,7 +218,9 @@ export default function VendeurOrdersPage() {
                               ? "bg-blue-500/15 text-blue-400"
                               : order.status === "delivered"
                                 ? "bg-emerald-500/15 text-emerald-400"
-                                : "bg-purple-500/15 text-purple-400"
+                                : order.status === "cancelled"
+                                  ? "bg-red-500/15 text-red-500"
+                                  : "bg-purple-500/15 text-purple-400"
                           }`}
                         >
                           <span
@@ -196,7 +229,9 @@ export default function VendeurOrdersPage() {
                                 ? "bg-blue-400"
                                 : order.status === "delivered"
                                   ? "bg-emerald-400"
-                                  : "bg-purple-400"
+                                  : order.status === "cancelled"
+                                    ? "bg-red-500"
+                                    : "bg-purple-400"
                             }`}
                           />
                           {STATUS_LABELS[order.status] || order.status}
@@ -206,25 +241,45 @@ export default function VendeurOrdersPage() {
                         {new Date(order.createdAt).toLocaleDateString("fr-FR")}
                       </td>
                       <td>
-                        {order.status === "transmitted" && (
+                        <div className="flex items-center gap-2">
+                          {order.status === "transmitted" && (
+                            <>
+                              <button
+                                onClick={() => handleMarkDelivered(order._id)}
+                                disabled={delivering === order._id}
+                                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-emerald-500/15 text-emerald-400 hover:bg-emerald-500/25 transition-colors disabled:opacity-50"
+                              >
+                                {delivering === order._id ? (
+                                  <div className="w-3.5 h-3.5 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin" />
+                                ) : (
+                                  <HiCheck className="w-3.5 h-3.5" />
+                                )}
+                                Livré
+                              </button>
+                              <button
+                                onClick={() => handleCancelOrder(order._id)}
+                                disabled={delivering === order._id}
+                                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-red-500/15 text-red-500 hover:bg-red-500/25 transition-colors disabled:opacity-50"
+                              >
+                                Annuler
+                              </button>
+                            </>
+                          )}
+                          {order.status === "delivered" && (
+                            <span className="flex items-center gap-1.5 text-xs text-emerald-400 mr-2">
+                              <HiTruck className="w-3.5 h-3.5" /> Livrée
+                            </span>
+                          )}
+
+                          {/* Viewer de détails */}
                           <button
-                            onClick={() => handleMarkDelivered(order._id)}
-                            disabled={delivering === order._id}
-                            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-emerald-500/15 text-emerald-400 hover:bg-emerald-500/25 transition-colors disabled:opacity-50"
+                            onClick={() => setSelectedOrder(order)}
+                            className="w-8 h-8 rounded-lg flex items-center justify-center bg-[var(--bg-hover)] text-blue-400 hover:bg-blue-500/20 transition-colors"
+                            title="Détails"
                           >
-                            {delivering === order._id ? (
-                              <div className="w-3.5 h-3.5 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin" />
-                            ) : (
-                              <HiCheck className="w-3.5 h-3.5" />
-                            )}
-                            Livré
+                            <HiEye className="w-4 h-4" />
                           </button>
-                        )}
-                        {order.status === "delivered" && (
-                          <span className="flex items-center gap-1.5 text-xs text-emerald-400">
-                            <HiTruck className="w-3.5 h-3.5" /> Livrée
-                          </span>
-                        )}
+                        </div>
                       </td>
                     </motion.tr>
                   ))
@@ -253,6 +308,13 @@ export default function VendeurOrdersPage() {
           </div>
         )}
       </div>
+
+      <OrderDetailModal
+        order={selectedOrder}
+        isOpen={!!selectedOrder}
+        onClose={() => setSelectedOrder(null)}
+        isAdmin={false}
+      />
     </VendeurLayout>
   );
 }

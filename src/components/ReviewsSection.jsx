@@ -69,10 +69,10 @@ function ReviewCard({ avis }) {
           {avis.name.charAt(0).toUpperCase()}
         </div>
         <div className="flex-1 min-w-0">
-          <p className="text-white font-semibold text-sm truncate">
+          <p className="text-[var(--text-primary)] font-semibold text-sm truncate">
             {avis.name}
           </p>
-          <p className="text-slate-500 text-[11px]">{date}</p>
+          <p className="text-[var(--text-secondary)] text-[11px]">{date}</p>
         </div>
       </div>
 
@@ -80,7 +80,7 @@ function ReviewCard({ avis }) {
       <StarRating value={avis.rating} interactive={false} size="w-4 h-4" />
 
       {/* Text */}
-      <p className="text-slate-300 text-sm leading-relaxed flex-1">
+      <p className="text-[var(--text-secondary)] text-sm leading-relaxed flex-1">
         {avis.text}
       </p>
     </div>
@@ -219,12 +219,16 @@ export default function ReviewsSection() {
                 initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
-                className="flex items-center gap-2 px-4 py-2 bg-white/[0.04] border border-white/[0.08] rounded-xl"
+                className="flex items-center gap-2 px-4 py-2 bg-[var(--bg-hover)] border border-[var(--border-color)] rounded-xl"
               >
                 <HiStar className="w-5 h-5 text-orange-400" />
-                <span className="text-white font-bold">{avgRating}</span>
-                <span className="text-slate-500 text-sm">/ 5</span>
-                <span className="text-slate-600 text-xs">
+                <span className="text-[var(--text-primary)] font-bold">
+                  {avgRating}
+                </span>
+                <span className="text-[var(--text-secondary)] text-sm">
+                  / 5
+                </span>
+                <span className="text-[var(--text-secondary)] text-xs">
                   ({reviews.length} avis)
                 </span>
               </motion.div>
@@ -258,14 +262,14 @@ export default function ReviewsSection() {
                 onSubmit={handleSubmit}
                 className="glass-card p-6 sm:p-8 max-w-xl"
               >
-                <h3 className="text-white font-bold text-lg mb-5">
+                <h3 className="text-[var(--text-primary)] font-bold text-lg mb-5">
                   Partagez votre expérience
                 </h3>
 
                 <div className="space-y-4">
                   {/* Name */}
                   <div>
-                    <label className="block text-slate-300 text-sm font-medium mb-1.5">
+                    <label className="block text-[var(--text-primary)] text-sm font-medium mb-1.5">
                       Votre nom *
                     </label>
                     <div className="relative">
@@ -289,7 +293,7 @@ export default function ReviewsSection() {
 
                   {/* Rating */}
                   <div>
-                    <label className="block text-slate-300 text-sm font-medium mb-2">
+                    <label className="block text-[var(--text-primary)] text-sm font-medium mb-2">
                       Note *
                     </label>
                     <StarRating
@@ -305,7 +309,7 @@ export default function ReviewsSection() {
 
                   {/* Text */}
                   <div>
-                    <label className="block text-slate-300 text-sm font-medium mb-1.5">
+                    <label className="block text-[var(--text-primary)] text-sm font-medium mb-1.5">
                       Votre avis *
                     </label>
                     <textarea
@@ -391,7 +395,7 @@ export default function ReviewsSection() {
               <div className="flex items-center justify-center gap-3 mt-8">
                 <button
                   onClick={() => goTo(-1)}
-                  className="w-10 h-10 bg-white/[0.05] border border-white/[0.1] hover:bg-orange-500/10 hover:border-orange-500/30 rounded-full flex items-center justify-center text-white hover:text-orange-400 transition-all duration-300"
+                  className="w-10 h-10 bg-[var(--bg-hover)] border border-[var(--border-color)] hover:border-orange-500/30 rounded-full flex items-center justify-center text-[var(--text-primary)] hover:text-orange-400 transition-all duration-300"
                 >
                   <HiChevronLeft className="w-5 h-5" />
                 </button>
@@ -412,7 +416,7 @@ export default function ReviewsSection() {
 
                 <button
                   onClick={() => goTo(1)}
-                  className="w-10 h-10 bg-white/[0.05] border border-white/[0.1] hover:bg-orange-500/10 hover:border-orange-500/30 rounded-full flex items-center justify-center text-white hover:text-orange-400 transition-all duration-300"
+                  className="w-10 h-10 bg-[var(--bg-hover)] border border-[var(--border-color)] hover:border-orange-500/30 rounded-full flex items-center justify-center text-[var(--text-primary)] hover:text-orange-400 transition-all duration-300"
                 >
                   <HiChevronRight className="w-5 h-5" />
                 </button>
