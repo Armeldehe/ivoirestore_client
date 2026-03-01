@@ -1,13 +1,14 @@
 import { useState } from "react";
 import { useNavigate, Navigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { HiLockClosed, HiMail } from "react-icons/hi";
+import { HiLockClosed, HiMail, HiEye, HiEyeOff } from "react-icons/hi";
 import { useAuth } from "../../context/AuthContext";
 
 export default function AdminLoginPage() {
   const { login, isAuth } = useAuth();
   const navigate = useNavigate();
   const [form, setForm] = useState({ email: "", password: "" });
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -118,17 +119,30 @@ export default function AdminLoginPage() {
               >
                 <HiLockClosed className="w-4 h-4" /> Mot de passe
               </label>
-              <input
-                type="password"
-                autoComplete="current-password"
-                placeholder="••••••••"
-                value={form.password}
-                onChange={(e) =>
-                  setForm((f) => ({ ...f, password: e.target.value }))
-                }
-                className="input-field"
-                required
-              />
+              <div className="relative">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  autoComplete="current-password"
+                  placeholder="••••••••"
+                  value={form.password}
+                  onChange={(e) =>
+                    setForm((f) => ({ ...f, password: e.target.value }))
+                  }
+                  className="input-field pr-10"
+                  required
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-emerald-500 transition-colors"
+                >
+                  {showPassword ? (
+                    <HiEyeOff className="w-5 h-5" />
+                  ) : (
+                    <HiEye className="w-5 h-5" />
+                  )}
+                </button>
+              </div>
             </div>
 
             <button

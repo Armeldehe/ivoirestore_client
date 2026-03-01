@@ -9,6 +9,8 @@ import {
   HiPencil,
   HiUserAdd,
   HiCurrencyDollar,
+  HiEye,
+  HiEyeOff,
 } from "react-icons/hi";
 import AdminLayout from "../../layouts/AdminLayout";
 import {
@@ -151,6 +153,7 @@ function CommissionModal({ isOpen, boutique, onClose, onSave }) {
 /* ─── Vendeur Creation Modal ─────────────────────────────────────────────── */
 function VendeurModal({ isOpen, boutique, onClose }) {
   const [form, setForm] = useState({ email: "", password: "" });
+  const [showPassword, setShowPassword] = useState(false);
   const [saving, setSaving] = useState(false);
 
   if (!isOpen || !boutique) return null;
@@ -238,17 +241,30 @@ function VendeurModal({ isOpen, boutique, onClose }) {
               >
                 Mot de passe
               </label>
-              <input
-                type="password"
-                value={form.password}
-                onChange={(e) =>
-                  setForm((f) => ({ ...f, password: e.target.value }))
-                }
-                placeholder="Minimum 6 caractères"
-                className="input-field"
-                required
-                minLength={6}
-              />
+              <div className="relative">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  value={form.password}
+                  onChange={(e) =>
+                    setForm((f) => ({ ...f, password: e.target.value }))
+                  }
+                  placeholder="Minimum 6 caractères"
+                  className="input-field pr-10"
+                  required
+                  minLength={6}
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-orange-500 transition-colors"
+                >
+                  {showPassword ? (
+                    <HiEyeOff className="w-5 h-5" />
+                  ) : (
+                    <HiEye className="w-5 h-5" />
+                  )}
+                </button>
+              </div>
             </div>
             <div className="flex gap-3 justify-end">
               <button
