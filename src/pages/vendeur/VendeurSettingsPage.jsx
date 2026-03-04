@@ -82,7 +82,7 @@ export default function VendeurSettingsPage() {
     if (!file) return;
     setUploading(true);
     try {
-      const data = await uploadImageVendeur("/upload/banner", file);
+      const data = await uploadImageVendeur("/upload/boutique-image", file);
       setBoutiqueForm((f) => ({ ...f, banner: data.url }));
       toast.success("Bannière uploadée !");
     } catch (err) {
