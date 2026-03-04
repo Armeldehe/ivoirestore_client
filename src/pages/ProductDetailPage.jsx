@@ -122,6 +122,33 @@ export default function ProductDetailPage() {
                   ))}
                 </div>
               )}
+
+              {/* Video player */}
+              {product.video && (
+                <div
+                  className="rounded-2xl overflow-hidden"
+                  style={{
+                    backgroundColor: "var(--bg-secondary)",
+                    border: "1px solid var(--border-color)",
+                  }}
+                >
+                  <video
+                    src={product.video}
+                    controls
+                    poster={product.images?.[0] || PLACEHOLDER}
+                    className="w-full rounded-2xl"
+                    style={{ maxHeight: "400px" }}
+                  />
+                  <div className="px-4 py-2">
+                    <p
+                      className="text-xs font-medium"
+                      style={{ color: "var(--text-tertiary)" }}
+                    >
+                      📹 Vidéo du produit
+                    </p>
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Info */}

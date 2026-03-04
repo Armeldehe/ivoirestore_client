@@ -203,6 +203,38 @@ export async function uploadImageVendeur(endpoint, file, onProgress) {
   return res.data;
 }
 
+export async function uploadVideo(endpoint, file, onProgress) {
+  const formData = new FormData();
+  formData.append("video", file);
+
+  const res = await api.post(endpoint, formData, {
+    headers: { "Content-Type": "multipart/form-data" },
+    timeout: 120000,
+    onUploadProgress: (e) => {
+      if (onProgress && e.total) {
+        onProgress(Math.round((e.loaded * 100) / e.total));
+      }
+    },
+  });
+  return res.data;
+}
+
+export async function uploadVideoVendeur(endpoint, file, onProgress) {
+  const formData = new FormData();
+  formData.append("video", file);
+
+  const res = await vendeurApi.post(endpoint, formData, {
+    headers: { "Content-Type": "multipart/form-data" },
+    timeout: 120000,
+    onUploadProgress: (e) => {
+      if (onProgress && e.total) {
+        onProgress(Math.round((e.loaded * 100) / e.total));
+      }
+    },
+  });
+  return res.data;
+}
+
 // ─── Avis (Reviews) ─────────────────────────────────────────────────────────
 
 export async function getAvis(params = {}) {

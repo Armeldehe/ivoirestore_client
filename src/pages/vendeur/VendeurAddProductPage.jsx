@@ -4,7 +4,12 @@ import { motion } from "framer-motion";
 import { HiArrowLeft, HiSave, HiX } from "react-icons/hi";
 import VendeurLayout from "../../layouts/VendeurLayout";
 import ImageUploader from "../../components/ImageUploader";
-import { createVendeurProduct, uploadImageVendeur } from "../../services/api";
+import VideoUploader from "../../components/VideoUploader";
+import {
+  createVendeurProduct,
+  uploadImageVendeur,
+  uploadVideoVendeur,
+} from "../../services/api";
 import toast from "react-hot-toast";
 
 export default function VendeurAddProductPage() {
@@ -16,6 +21,7 @@ export default function VendeurAddProductPage() {
     description: "",
     stock: "",
     images: [],
+    video: "",
   });
 
   const handleChange = (e) => {
@@ -47,6 +53,7 @@ export default function VendeurAddProductPage() {
         description: form.description,
         stock: form.stock ? Number(form.stock) : 0,
         images: form.images,
+        video: form.video,
       });
       toast.success("Produit créé avec succès !");
       navigate("/vendeur/products");
@@ -161,10 +168,10 @@ export default function VendeurAddProductPage() {
               placeholder="Décrivez votre produit..."
               rows={4}
               className="input-field resize-none"
-              maxLength={1000}
+              maxLength={2000}
             />
             <p className="text-xs text-slate-500 mt-1">
-              {form.description.length}/1000 caractères
+              {form.description.length}/2000 caractères
             </p>
           </div>
 
@@ -172,10 +179,11 @@ export default function VendeurAddProductPage() {
           <div>
             <ImageUploader
               endpoint="/upload/product-image"
-              label="Images du produit"
+              label="Images du produit (sélection multiple)"
               onUploadComplete={handleImageUploaded}
               onRemove={() => {}}
               uploadFn={uploadImageVendeur}
+              multiple={true}
             />
 
             {/* Uploaded images grid */}
@@ -216,6 +224,18 @@ export default function VendeurAddProductPage() {
                 </div>
               </div>
             )}
+          </div>
+
+          {/* Video */}
+          <div>
+            <VideoUploader
+              endpoint="/upload/product-video"
+              label="Vidéo du produit (1 min max, optionnel)"
+              currentVideo={form.video}
+              onUploadComplete={(url) => setForm((f) => ({ ...f, video: url }))}
+              onRemove={() => setForm((f) => ({ ...f, video: "" }))}
+              uploadFn={uploadVideoVendeur}
+            />
           </div>
 
           {/* Submit */}

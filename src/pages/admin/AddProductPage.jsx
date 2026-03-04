@@ -3,8 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { HiCollection, HiArrowLeft, HiX } from "react-icons/hi";
 import AdminLayout from "../../layouts/AdminLayout";
-import { createProduct, getBoutiques } from "../../services/api";
+import { createProduct, getBoutiques, uploadVideo } from "../../services/api";
 import ImageUploader from "../../components/ImageUploader";
+import VideoUploader from "../../components/VideoUploader";
 import toast from "react-hot-toast";
 
 const INITIAL = {
@@ -14,6 +15,7 @@ const INITIAL = {
   stock: "",
   description: "",
   images: [],
+  video: "",
 };
 
 export default function AddProductPage() {
@@ -52,6 +54,7 @@ export default function AddProductPage() {
         stock: Number(form.stock),
         description: form.description,
         images: form.images,
+        video: form.video,
       };
       await createProduct(payload);
       toast.success("Produit créé avec succès !");
@@ -160,9 +163,10 @@ export default function AddProductPage() {
             <div>
               <ImageUploader
                 endpoint="/upload/product-image"
-                label="Images du produit"
+                label="Images du produit (sélection multiple)"
                 onUploadComplete={handleImageUploaded}
                 onRemove={() => {}}
+                multiple={true}
               />
 
               {/* Uploaded images grid */}
@@ -249,9 +253,27 @@ export default function AddProductPage() {
               <textarea
                 value={form.description}
                 onChange={handleChange("description")}
-                rows={4}
-                placeholder="Décrivez le produit..."
+                rows={5}
+                maxLength={2000}
+                placeholder="Décrivez le produit en détail..."
                 className="input-field resize-none"
+              />
+              <p className="text-xs text-slate-500 mt-1">
+                {form.description.length}/2000 caractères
+              </p>
+            </div>
+
+            {/* Video */}
+            <div>
+              <VideoUploader
+                endpoint="/upload/product-video"
+                label="Vidéo du produit (1 min max, optionnel)"
+                currentVideo={form.video}
+                onUploadComplete={(url) =>
+                  setForm((prev) => ({ ...prev, video: url }))
+                }
+                onRemove={() => setForm((prev) => ({ ...prev, video: "" }))}
+                uploadFn={uploadVideo}
               />
             </div>
 

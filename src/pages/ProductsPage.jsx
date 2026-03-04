@@ -8,7 +8,8 @@ import { useProducts } from "../hooks/useProducts";
 import { HiAdjustments, HiX } from "react-icons/hi";
 
 const SORT_OPTIONS = [
-  { value: "", label: "Plus récents" },
+  { value: "", label: "Sélection aléatoire" },
+  { value: "recent", label: "Plus récents" },
   { value: "price", label: "Prix croissant" },
   { value: "-price", label: "Prix décroissant" },
 ];
@@ -59,6 +60,7 @@ export default function ProductsPage() {
             <SearchBar value={params.search || ""} onChange={handleSearch} />
           </div>
           <select
+            value={params.sort || ""}
             onChange={(e) => handleSort(e.target.value)}
             className="input-field sm:w-52"
           >

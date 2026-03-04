@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useCallback } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
 import { HiChevronLeft, HiChevronRight } from "react-icons/hi";
 
@@ -219,28 +219,26 @@ export default function HorizontalCarousel({
       >
         {/* Left edge fade */}
         <div className="shrink-0 w-0" />
-        {Array.isArray(children)
-          ? children.map((child, i) => (
-              <div
-                key={i}
-                className="shrink-0 snap-start"
-                style={{ width: "clamp(260px, 28vw, 320px)" }}
-              >
-                <motion.div
-                  initial={{ opacity: 0, x: 40 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true, margin: "-40px" }}
-                  transition={{
-                    duration: 0.5,
-                    delay: i * 0.05,
-                    ease: [0.22, 1, 0.36, 1],
-                  }}
-                >
-                  {child}
-                </motion.div>
-              </div>
-            ))
-          : children}
+        {React.Children.toArray(children).map((child, i) => (
+          <div
+            key={i}
+            className="shrink-0 snap-start"
+            style={{ width: "clamp(260px, 28vw, 320px)" }}
+          >
+            <motion.div
+              initial={{ opacity: 0, x: 40 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{
+                duration: 0.5,
+                delay: i * 0.05,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+            >
+              {child}
+            </motion.div>
+          </div>
+        ))}
         <div className="shrink-0 w-4" />
       </div>
 

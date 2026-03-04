@@ -136,6 +136,13 @@ export default function BoutiquesPage() {
                   index={idx}
                 />
               ))}
+              {boutiques.length < 4 &&
+                [...Array(4 - boutiques.length)].map((_, i) => (
+                  <PlaceholderBoutiqueCard
+                    key={`page-placeholder-${i}`}
+                    index={filteredBoutiques.length + i}
+                  />
+                ))}
             </motion.div>
           )}
         </div>

@@ -1,6 +1,7 @@
+import { useState, useRef, useCallback } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { HiShoppingBag, HiShieldCheck } from "react-icons/hi";
+import { HiShoppingBag, HiShieldCheck, HiStar } from "react-icons/hi";
 import { HiTruck } from "react-icons/hi2";
 import { useCart } from "../context/CartContext";
 
@@ -14,6 +15,33 @@ function formatPrice(n) {
 export default function ProductCard({ product, index = 0 }) {
   const { addItem } = useCart();
   const image = product.images?.[0] || PLACEHOLDER;
+  const rating = product.rating || 0;
+  const numRatings = product.numRatings || 0;
+  const hasVideo = !!product.video;
+
+  const [showVideo, setShowVideo] = useState(false);
+  const videoRef = useRef(null);
+
+  const startVideo = useCallback(() => {
+    if (!hasVideo) return;
+    setShowVideo(true);
+    // Small delay to let the video element mount
+    setTimeout(() => {
+      if (videoRef.current) {
+        videoRef.current.currentTime = 0;
+        videoRef.current.play().catch(() => {});
+      }
+    }, 50);
+  }, [hasVideo]);
+
+  const stopVideo = useCallback(() => {
+    if (!hasVideo) return;
+    if (videoRef.current) {
+      videoRef.current.pause();
+      videoRef.current.currentTime = 0;
+    }
+    setShowVideo(false);
+  }, [hasVideo]);
 
   return (
     <motion.div
@@ -27,29 +55,57 @@ export default function ProductCard({ product, index = 0 }) {
       whileHover={{ y: -6, transition: { duration: 0.3 } }}
       className="group glass-card overflow-hidden flex flex-col hover:border-orange-500/30 hover:shadow-xl hover:shadow-orange-500/10 transition-all duration-500"
     >
-      {/* Image */}
+      {/* Image / Video */}
       <Link
         to={`/products/${product._id}`}
         className="relative block overflow-hidden"
         style={{ backgroundColor: "var(--bg-secondary)" }}
+        onMouseEnter={startVideo}
+        onMouseLeave={stopVideo}
+        onTouchStart={startVideo}
+        onTouchEnd={stopVideo}
       >
-        <div className="aspect-square overflow-hidden">
+        <div className="aspect-square overflow-hidden relative">
+          {/* Main product image */}
           <img
             src={image}
             alt={product.name}
-            className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+            className={`w-full h-full object-cover transition-all duration-500 ease-out group-hover:scale-110 ${
+              showVideo ? "opacity-0" : "opacity-100"
+            }`}
             loading="lazy"
             onError={(e) => {
               e.target.src = PLACEHOLDER;
             }}
           />
+
+          {/* Video overlay — only rendered when hovering a product with video */}
+          {hasVideo && showVideo && (
+            <video
+              ref={videoRef}
+              src={product.video}
+              muted
+              playsInline
+              loop
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+          )}
+
+          {/* Small video indicator badge */}
+          {hasVideo && !showVideo && (
+            <div className="absolute bottom-3 right-3 z-10">
+              <span className="inline-flex items-center gap-1 px-2 py-1 bg-black/60 backdrop-blur-sm text-white text-[10px] font-bold rounded-lg">
+                ▶ Vidéo
+              </span>
+            </div>
+          )}
         </div>
 
         {/* Gradient overlay on hover */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 pointer-events-none" />
 
         {/* Badges top */}
-        <div className="absolute top-3 left-3 flex flex-col gap-1.5">
+        <div className="absolute top-3 left-3 flex flex-col gap-1.5 z-10">
           <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-green-500/20 backdrop-blur-md border border-green-500/20 rounded-lg text-green-400 text-[10px] font-bold">
             <HiTruck className="w-3 h-3" />
             Paiement à la livraison
@@ -73,7 +129,7 @@ export default function ProductCard({ product, index = 0 }) {
         </div>
 
         {/* Quick add overlay */}
-        <div className="absolute inset-x-0 bottom-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out">
+        <div className="absolute inset-x-0 bottom-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out z-10">
           <button
             onClick={(e) => {
               e.preventDefault();
@@ -107,6 +163,21 @@ export default function ProductCard({ product, index = 0 }) {
             {product.name}
           </h3>
         </Link>
+
+        {/* Rating Stars */}
+        <div className="flex items-center gap-1">
+          {[...Array(5)].map((_, i) => (
+            <HiStar
+              key={i}
+              className={`w-3.5 h-3.5 ${i < Math.round(rating) ? "text-amber-400" : "text-slate-600"}`}
+            />
+          ))}
+          {numRatings > 0 && (
+            <span className="text-[10px] text-slate-500 ml-1">
+              ({numRatings})
+            </span>
+          )}
+        </div>
 
         <div
           className="flex items-center justify-between mt-auto pt-3"
