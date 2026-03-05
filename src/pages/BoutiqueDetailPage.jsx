@@ -28,11 +28,15 @@ export default function BoutiqueDetailPage() {
     async function fetchData() {
       setLoading(true);
       try {
-        const [boutiqueRes, productsRes] = await Promise.all([
-          getBoutique(id),
-          getProducts({ boutique: id, limit: 50 }),
-        ]);
+        // Fetch boutique first (supports both _id and slug)
+        const boutiqueRes = await getBoutique(id);
         setBoutique(boutiqueRes.data);
+
+        // Fetch products using the boutique's actual _id
+        const productsRes = await getProducts({
+          boutique: boutiqueRes.data._id,
+          limit: 50,
+        });
         setProducts(productsRes.data);
       } catch (err) {
         setError(err.message);

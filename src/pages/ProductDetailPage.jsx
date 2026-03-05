@@ -223,7 +223,7 @@ export default function ProductDetailPage() {
                       Vendu par {product.boutique.name}
                     </p>
                     <Link
-                      to={`/boutiques/${product.boutique._id}`}
+                      to={`/boutiques/${product.boutique.slug || product.boutique._id}`}
                       className="text-orange-400 text-xs font-bold hover:text-orange-300"
                     >
                       Voir la boutique →

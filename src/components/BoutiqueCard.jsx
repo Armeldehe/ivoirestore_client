@@ -86,7 +86,7 @@ export default function BoutiqueCard({ boutique, index = 0 }) {
             {boutique.address || "Côte d'Ivoire"}
           </span>
           <Link
-            to={`/boutiques/${boutique._id}`}
+            to={`/boutiques/${boutique.slug || boutique._id}`}
             className="inline-flex items-center gap-1.5 px-4 py-2 bg-orange-500/10 hover:bg-orange-500/20 border border-orange-500/20 hover:border-orange-500/40 rounded-xl text-orange-400 text-xs font-semibold transition-all duration-300 group/btn"
           >
             Voir boutique

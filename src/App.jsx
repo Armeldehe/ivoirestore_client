@@ -64,8 +64,8 @@ export default function App() {
   return (
     <>
       <Suspense fallback={<PageLoader />}>
-        <AnimatePresence mode="wait">
-          <Routes location={location} key={location.pathname}>
+        <AnimatePresence>
+          <Routes location={location}>
             {/* ── Public ── */}
             <Route path="/" element={<HomePage />} />
             <Route path="/boutiques" element={<BoutiquesPage />} />
